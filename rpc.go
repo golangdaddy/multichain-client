@@ -2,7 +2,6 @@ package multichain
 
 import (
 	"fmt"
-	"bytes"
 	"net/http"
 	"io/ioutil"
 	"encoding/json"
@@ -36,9 +35,9 @@ func (client *Client) post(msg interface{}) (map[string]interface{}, error) {
 		panic(err)
 	}
 
-	req.Header.Add("Authorization", "Basic " + client.credentials)
+	request.Header.Add("Authorization", "Basic " + client.credentials)
 
-	b, err = ioutil.ReadAll(resp.Body)
+	b, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return nil, err
 	}
@@ -59,9 +58,9 @@ func (client *Client) GetInfo() (map[string]interface{}, error) {
 		"params": []interface{}{},
 	}
 
-	obj, err := post(msg)
+	obj, err := client.post(msg)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
 	return obj, err
