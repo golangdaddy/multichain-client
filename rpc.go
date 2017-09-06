@@ -35,12 +35,12 @@ func (client *Client) post(msg interface{}) (map[string]interface{}, error) {
 
 	request, err := sling.New().Post(client.endpoint).BodyJSON(msg).Request()
 
+	request.Header.Add("Authorization", "Basic " + client.credentials)
+
 	resp, err := client.httpClient.Do(request)
 	if err != nil {
 		panic(err)
 	}
-
-	request.Header.Add("Authorization", "Basic " + client.credentials)
 
 	b, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
