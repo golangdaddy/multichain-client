@@ -75,7 +75,62 @@ func (client *Client) GetInfo() (map[string]interface{}, error) {
 	return obj, err
 }
 
+func (client *Client) GetNewAddress() (map[string]interface{}, error) {
+
+	msg := map[string]interface{}{
+		"jsonrpc": "1.0",
+		"id": CONST_ID,
+		"method": "getnewaddress",
+		"params": []interface{}{},
+	}
+
+	obj, err := client.post(msg)
+	if err != nil {
+		return nil, err
+	}
+
+	return obj, err
+}
+
+func (client *Client) CreateKeypairs() (map[string]interface{}, error) {
+
+	msg := map[string]interface{}{
+		"jsonrpc": "1.0",
+		"id": CONST_ID,
+		"method": "createkeypairs",
+		"params": []interface{}{},
+	}
+
+	obj, err := client.post(msg)
+	if err != nil {
+		return nil, err
+	}
+
+	return obj, err
+}
+
 func (client *Client) SendAssetToAddress(accountAddress, assetName string, value float64) (map[string]interface{}, error) {
+
+	msg := map[string]interface{}{
+		"jsonrpc": "1.0",
+		"id": CONST_ID,
+		"method": "sendassettoaddress",
+		"params": []interface{}{
+			accountAddress,
+			assetName,
+			value,
+		},
+	}
+
+	obj, err := client.post(msg)
+	if err != nil {
+		return nil, err
+	}
+
+	return obj, err
+}
+
+func (client *Client) IssueMore(accountAddress, assetName string, value float64) (map[string]interface{}, error) {
 
 	msg := map[string]interface{}{
 		"jsonrpc": "1.0",
