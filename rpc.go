@@ -14,6 +14,12 @@ const (
 	CONST_ID = "multichain-client"
 )
 
+type Response map[string]interface{}
+
+func (r Response) Result() interface{} {
+	return r["result"]
+}
+
 type Client struct {
 	httpClient *http.Client
 	endpoint string
@@ -31,7 +37,7 @@ func NewClient(host, port, username, password string) *Client {
 	}
 }
 
-func (client *Client) post(msg interface{}) (map[string]interface{}, error) {
+func (client *Client) post(msg interface{}) (Response, error) {
 
 	request, err := sling.New().Post(client.endpoint).BodyJSON(msg).Request()
 
@@ -47,7 +53,7 @@ func (client *Client) post(msg interface{}) (map[string]interface{}, error) {
 		return nil, err
 	}
 
-	obj := map[string]interface{}{}
+	obj := make(Response)
 
 	if err := json.Unmarshal(b, &obj); err != nil {
 		fmt.Println(string(b))
@@ -57,7 +63,7 @@ func (client *Client) post(msg interface{}) (map[string]interface{}, error) {
 	return obj, nil
 }
 
-func (client *Client) GetInfo() (map[string]interface{}, error) {
+func (client *Client) GetInfo() (Response, error) {
 
 	msg := map[string]interface{}{
 		"jsonrpc": "1.0",
@@ -74,7 +80,7 @@ func (client *Client) GetInfo() (map[string]interface{}, error) {
 	return obj, nil
 }
 
-func (client *Client) GetNewAddress() (map[string]interface{}, error) {
+func (client *Client) GetNewAddress() (Response, error) {
 
 	msg := map[string]interface{}{
 		"jsonrpc": "1.0",
@@ -118,7 +124,7 @@ func (client *Client) CreateKeypair() (*AddressKeyPair, error) {
 	return addressKeyPair, nil
 }
 
-func (client *Client) SendAssetToAddress(accountAddress, assetName string, value float64) (map[string]interface{}, error) {
+func (client *Client) SendAssetToAddress(accountAddress, assetName string, value float64) (Response, error) {
 
 	msg := map[string]interface{}{
 		"jsonrpc": "1.0",
@@ -139,7 +145,7 @@ func (client *Client) SendAssetToAddress(accountAddress, assetName string, value
 	return obj, nil
 }
 
-func (client *Client) IssueMore(accountAddress, assetName string, value float64) (map[string]interface{}, error) {
+func (client *Client) IssueMore(accountAddress, assetName string, value float64) (Response, error) {
 
 	msg := map[string]interface{}{
 		"jsonrpc": "1.0",
