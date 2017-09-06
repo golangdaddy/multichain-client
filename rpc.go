@@ -46,6 +46,9 @@ func (client *Client) post(msg interface{}) (map[string]interface{}, error) {
 	m := map[string]interface{}{}
 
 	err = json.Unmarshal(b, &m)
+	if err != nil {
+		return nil, err
+	}
 
 	return m, nil
 }
@@ -57,6 +60,27 @@ func (client *Client) GetInfo() (map[string]interface{}, error) {
 		"id": "curltest",
 		"method": "getinfo",
 		"params": []interface{}{},
+	}
+
+	obj, err := client.post(msg)
+	if err != nil {
+		return nil, err
+	}
+
+	return obj, err
+}
+
+func (client *Client) SendAssetToAddress() (map[string]interface{}, error) {
+
+	msg := map[string]interface{}{
+		"jsonrpc": "1.0",
+		"id": "curltest",
+		"method": "sendassettoaddress",
+		"params": []interface{}{
+			"1RNb9E4fZE7gbej4zD1fa3GFH3cPH7qfVLCPT9",
+			"GBP",
+			"22.5",
+		},
 	}
 
 	obj, err := client.post(msg)
