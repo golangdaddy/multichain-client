@@ -84,7 +84,7 @@ func (client *Client) SendAssetToAddress(accountAddress, assetName string, value
 		"params": []interface{}{
 			accountAddress,
 			assetName,
-			fmt.Sprintf("%d", value),
+			value,
 		},
 	}
 
