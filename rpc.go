@@ -31,7 +31,7 @@ func NewClient(host, port, username, password string) *Client {
 	}
 }
 
-func (client *Client) post(msg interface{}) (map[string]interface{}, error) {
+func (client *Client) post(msg, dst interface{}) error {
 
 	request, err := sling.New().Post(client.endpoint).BodyJSON(msg).Request()
 
@@ -44,18 +44,16 @@ func (client *Client) post(msg interface{}) (map[string]interface{}, error) {
 
 	b, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
-		return nil, err
+		return err
 	}
 
-	m := map[string]interface{}{}
-
-	err = json.Unmarshal(b, &m)
+	err = json.Unmarshal(b, dst)
 	if err != nil {
 		fmt.Println(string(b))
-		return nil, err
+		return err
 	}
 
-	return m, nil
+	return nil
 }
 
 func (client *Client) GetInfo() (map[string]interface{}, error) {
@@ -67,12 +65,13 @@ func (client *Client) GetInfo() (map[string]interface{}, error) {
 		"params": []interface{}{},
 	}
 
-	obj, err := client.post(msg)
-	if err != nil {
+	obj := map[string]interface{}{}
+
+	if err := client.post(msg, &obj); err != nil {
 		return nil, err
 	}
 
-	return obj, err
+	return obj, nil
 }
 
 func (client *Client) GetNewAddress() (map[string]interface{}, error) {
@@ -84,15 +83,16 @@ func (client *Client) GetNewAddress() (map[string]interface{}, error) {
 		"params": []interface{}{},
 	}
 
-	obj, err := client.post(msg)
-	if err != nil {
+	obj := map[string]interface{}{}
+
+	if err := client.post(msg, &obj); err != nil {
 		return nil, err
 	}
 
-	return obj, err
+	return obj, nil
 }
 
-func (client *Client) CreateKeypairs() (map[string]interface{}, error) {
+func (client *Client) CreateKeypairs() (*AddressKeyPair, error) {
 
 	msg := map[string]interface{}{
 		"jsonrpc": "1.0",
@@ -101,12 +101,13 @@ func (client *Client) CreateKeypairs() (map[string]interface{}, error) {
 		"params": []interface{}{},
 	}
 
-	obj, err := client.post(msg)
-	if err != nil {
+	obj := &AddressKeyPair{}
+
+	if err := client.post(msg, &obj); err != nil {
 		return nil, err
 	}
 
-	return obj, err
+	return obj, nil
 }
 
 func (client *Client) SendAssetToAddress(accountAddress, assetName string, value float64) (map[string]interface{}, error) {
@@ -122,12 +123,13 @@ func (client *Client) SendAssetToAddress(accountAddress, assetName string, value
 		},
 	}
 
-	obj, err := client.post(msg)
-	if err != nil {
+	obj := map[string]interface{}{}
+
+	if err := client.post(msg, &obj); err != nil {
 		return nil, err
 	}
 
-	return obj, err
+	return obj, nil
 }
 
 func (client *Client) IssueMore(accountAddress, assetName string, value float64) (map[string]interface{}, error) {
@@ -143,10 +145,11 @@ func (client *Client) IssueMore(accountAddress, assetName string, value float64)
 		},
 	}
 
-	obj, err := client.post(msg)
-	if err != nil {
+	obj := map[string]interface{}{}
+
+	if err := client.post(msg, &obj); err != nil {
 		return nil, err
 	}
 
-	return obj, err
+	return obj, nil
 }
