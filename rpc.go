@@ -10,6 +10,10 @@ import (
 	"github.com/dghubble/sling"
 )
 
+const (
+	CONST_ID = "multichain-client"
+)
+
 type Client struct {
 	httpClient *http.Client
 	endpoint string
@@ -47,6 +51,7 @@ func (client *Client) post(msg interface{}) (map[string]interface{}, error) {
 
 	err = json.Unmarshal(b, &m)
 	if err != nil {
+		fmt.Println(string(b))
 		return nil, err
 	}
 
@@ -57,7 +62,7 @@ func (client *Client) GetInfo() (map[string]interface{}, error) {
 
 	msg := map[string]interface{}{
 		"jsonrpc": "1.0",
-		"id": "curltest",
+		"id": CONST_ID,
 		"method": "getinfo",
 		"params": []interface{}{},
 	}
@@ -74,7 +79,7 @@ func (client *Client) SendAssetToAddress(accountAddress, assetName string, value
 
 	msg := map[string]interface{}{
 		"jsonrpc": "1.0",
-		"id": "curltest",
+		"id": CONST_ID,
 		"method": "sendassettoaddress",
 		"params": []interface{}{
 			accountAddress,
