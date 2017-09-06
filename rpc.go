@@ -21,6 +21,7 @@ func NewClient(host, port, username, password string) *Client {
 	credentials := username + ":" + password
 
 	return &Client{
+		httpClient: &http.Client{},
 		endpoint: fmt.Sprintf("http://%s:%s", host, port),
 		credentials: base64.StdEncoding.EncodeToString([]byte(credentials)),
 	}
