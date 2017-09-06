@@ -49,7 +49,7 @@ func (client *Client) post(msg interface{}) (map[string]interface{}, error) {
 
 	obj := map[string]interface{}{}
 
-	if err := json.Unmarshal(b, obj); err != nil {
+	if err := json.Unmarshal(b, &obj); err != nil {
 		fmt.Println(string(b))
 		return nil, err
 	}
