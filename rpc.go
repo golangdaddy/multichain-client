@@ -70,16 +70,16 @@ func (client *Client) GetInfo() (map[string]interface{}, error) {
 	return obj, err
 }
 
-func (client *Client) SendAssetToAddress() (map[string]interface{}, error) {
+func (client *Client) SendAssetToAddress(accountAddress, assetName string, value float64) (map[string]interface{}, error) {
 
 	msg := map[string]interface{}{
 		"jsonrpc": "1.0",
 		"id": "curltest",
 		"method": "sendassettoaddress",
 		"params": []interface{}{
-			"1RNb9E4fZE7gbej4zD1fa3GFH3cPH7qfVLCPT9",
-			"GBP",
-			"22.5",
+			accountAddress,
+			assetName,
+			fmt.Sprintf("%d", value),
 		},
 	}
 
