@@ -91,7 +91,7 @@ func (client *Client) GetNewAddress() (map[string]interface{}, error) {
 	return obj, nil
 }
 
-func (client *Client) CreateKeypairs() (*AddressKeyPair, error) {
+func (client *Client) CreateKeypair() (*AddressKeyPair, error) {
 
 	msg := map[string]interface{}{
 		"jsonrpc": "1.0",
@@ -105,7 +105,9 @@ func (client *Client) CreateKeypairs() (*AddressKeyPair, error) {
 		return nil, err
 	}
 
-	result := obj["result"].(map[string]interface{})
+	array := obj["result"].([]interface{})
+
+	result := array[0].(map[string]interface{})
 
 	addressKeyPair := &AddressKeyPair{
 		Address: result["address"].(string),
