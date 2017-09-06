@@ -103,7 +103,7 @@ func (client *Client) CreateKeypairs() (*AddressKeyPair, error) {
 
 	obj := &AddressKeyPair{}
 
-	if err := client.post(msg, &obj); err != nil {
+	if err := client.post(msg, obj); err != nil {
 		return nil, err
 	}
 
