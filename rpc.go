@@ -102,7 +102,7 @@ func (client *Client) GetAddressBalances(address string) (Response, error) {
 	msg := map[string]interface{}{
 		"jsonrpc": "1.0",
 		"id": CONST_ID,
-		"method": "getnewaddress",
+		"method": "getaddressbalances",
 		"params": []interface{}{address},
 	}
 
