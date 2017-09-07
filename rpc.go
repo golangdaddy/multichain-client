@@ -2,7 +2,7 @@ package multichain
 
 import (
 	"fmt"
-	"strings"
+	//"strings"
 	"net/http"
 	"io/ioutil"
 	"encoding/json"
@@ -64,58 +64,6 @@ func (client *Client) post(msg interface{}) (Response, error) {
 	return obj, nil
 }
 
-func (client *Client) GetInfo() (Response, error) {
-
-	msg := map[string]interface{}{
-		"jsonrpc": "1.0",
-		"id": CONST_ID,
-		"method": "getinfo",
-		"params": []interface{}{},
-	}
-
-	obj, err := client.post(msg)
-	if err != nil {
-		return nil, err
-	}
-
-	return obj, nil
-}
-
-func (client *Client) GetNewAddress() (Response, error) {
-
-	msg := map[string]interface{}{
-		"jsonrpc": "1.0",
-		"id": CONST_ID,
-		"method": "getnewaddress",
-		"params": []interface{}{},
-	}
-
-	obj, err := client.post(msg)
-	if err != nil {
-		return nil, err
-	}
-
-	return obj, nil
-}
-
-func (client *Client) Grant(addresses, permissions []string) (Response, error) {
-
-	msg := map[string]interface{}{
-		"jsonrpc": "1.0",
-		"id": CONST_ID,
-		"method": "grant",
-		"params": []interface{}{strings.Join(addresses, ","), strings.Join(permissions, ",")},
-	}
-
-	obj, err := client.post(msg)
-	if err != nil {
-		return nil, err
-	}
-
-	return obj, nil
-}
-
-
 func (client *Client) GetAddressBalances(address string) (Response, error) {
 
 	msg := map[string]interface{}{
@@ -131,33 +79,6 @@ func (client *Client) GetAddressBalances(address string) (Response, error) {
 	}
 
 	return obj, nil
-}
-
-func (client *Client) CreateKeypair() (*AddressKeyPair, error) {
-
-	msg := map[string]interface{}{
-		"jsonrpc": "1.0",
-		"id": CONST_ID,
-		"method": "createkeypairs",
-		"params": []interface{}{},
-	}
-
-	obj, err := client.post(msg)
-	if err != nil {
-		return nil, err
-	}
-
-	array := obj["result"].([]interface{})
-
-	result := array[0].(map[string]interface{})
-
-	addressKeyPair := &AddressKeyPair{
-		Address: result["address"].(string),
-		PubKey: result["pubkey"].(string),
-		PrivKey: result["privkey"].(string),
-	}
-
-	return addressKeyPair, nil
 }
 
 func (client *Client) SendAssetToAddress(accountAddress, assetName string, value float64) (Response, error) {
