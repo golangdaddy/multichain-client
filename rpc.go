@@ -2,6 +2,7 @@ package multichain
 
 import (
 	"fmt"
+	"strings"
 	"net/http"
 	"io/ioutil"
 	"encoding/json"
@@ -96,6 +97,24 @@ func (client *Client) GetNewAddress() (Response, error) {
 
 	return obj, nil
 }
+
+func (client *Client) Grant(addresses, permissions []string) (Response, error) {
+
+	msg := map[string]interface{}{
+		"jsonrpc": "1.0",
+		"id": CONST_ID,
+		"method": "grant",
+		"params": []interface{}{strings.Join(addresses, ","), strings.Join(permissions, ",")},
+	}
+
+	obj, err := client.post(msg)
+	if err != nil {
+		return nil, err
+	}
+
+	return obj, nil
+}
+
 
 func (client *Client) GetAddressBalances(address string) (Response, error) {
 
