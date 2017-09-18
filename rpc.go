@@ -38,6 +38,10 @@ func NewClient(host, port, username, password string) *Client {
 	}
 }
 
+func (client *Client) debug() string {
+	return client.endpoint + " " + client.credentials
+}
+
 func (client *Client) post(msg interface{}) (Response, error) {
 
 	request, err := sling.New().Post(client.endpoint).BodyJSON(msg).Request()
