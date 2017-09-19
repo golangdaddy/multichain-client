@@ -22,6 +22,7 @@ func (r Response) Result() interface{} {
 }
 
 type Client struct {
+	chain string
 	httpClient *http.Client
 	endpoint string
 	credentials string
@@ -32,6 +33,7 @@ func NewClient(chain, host, port, username, password string) *Client {
 	credentials := username + ":" + password
 
 	return &Client{
+		chain: chain,
 		httpClient: &http.Client{},
 		endpoint: fmt.Sprintf("http://%s:%s", host, port),
 		credentials: base64.StdEncoding.EncodeToString([]byte(credentials)),
