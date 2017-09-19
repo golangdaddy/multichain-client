@@ -11,7 +11,7 @@ func init() {
 
 	host := flag.String("host", "localhost", "is a string")
 	port := flag.String("port", "80", "is a string")
-	username := flag.String("username", "admin", "is a string")
+	username := flag.String("username", "multichainrpc", "is a string")
 	password := flag.String("password", "12345678", "is a string")
 
 	flag.Parse()
