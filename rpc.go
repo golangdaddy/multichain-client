@@ -27,7 +27,7 @@ type Client struct {
 	credentials string
 }
 
-func NewClient(host, port, username, password string) *Client {
+func NewClient(chain, host, port, username, password string) *Client {
 
 	credentials := username + ":" + password
 
