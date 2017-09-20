@@ -24,6 +24,7 @@ func (r Response) Result() interface{} {
 type Client struct {
 	chain string
 	httpClient *http.Client
+	port string
 	endpoint string
 	credentials string
 }
@@ -35,9 +36,20 @@ func NewClient(chain, host, port, username, password string) *Client {
 	return &Client{
 		chain: chain,
 		httpClient: &http.Client{},
+		port: port,
 		endpoint: fmt.Sprintf("http://%s:%s", host, port),
 		credentials: base64.StdEncoding.EncodeToString([]byte(credentials)),
 	}
+}
+
+// Creates a new temporary config for calling an RPC method on the specified node
+func (client *Client) ViaNode(host string) *Client {
+
+	c := *client
+
+	c.endpoint = fmt.Sprintf("http://%s:%s", host, client.port)
+
+	return &c
 }
 
 func (client *Client) debug() string {
