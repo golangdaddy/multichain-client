@@ -1,6 +1,6 @@
 package multichain
 
-func (client *Client) Issue(accountAddress, assetName string, value float64, units float64) (Response, error) {
+func (client *Client) Issue(isOpen bool, accountAddress, assetName string, quantity float64, units float64) (Response, error) {
 
 	msg := map[string]interface{}{
 		"jsonrpc": "1.0",
@@ -8,9 +8,12 @@ func (client *Client) Issue(accountAddress, assetName string, value float64, uni
 		"method": "issue",
 		"params": []interface{}{
 			accountAddress,
-			assetName,
-			value,
-            units,
+			map[string]interface{}{
+				"name": assetName,
+				"open": isOpen,
+			},
+			quantity,
+			units,
 		},
 	}
 

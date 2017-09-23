@@ -2,7 +2,7 @@ package multichain
 
 import (
 	"fmt"
-	//"strings"
+	"errors"
 	"net/http"
 	"io/ioutil"
 	"encoding/json"
@@ -77,6 +77,18 @@ func (client *Client) post(msg interface{}) (Response, error) {
 	if err := json.Unmarshal(b, &obj); err != nil {
 		fmt.Println(string(b))
 		return nil, err
+	}
+
+	if obj["error"] != nil {
+		e := obj["error"].(map[string]interface{})
+		var s string
+		m, ok := msg.(map[string]interface{})
+		if ok {
+			s = fmt.Sprintf("multichaind/%s: %s", m["method"], e["message"].(string))
+		} else {
+			s = fmt.Sprintf("multichaind: %s", e["message"].(string))
+		}
+		return nil, errors.New(s)
 	}
 
 	return obj, nil
