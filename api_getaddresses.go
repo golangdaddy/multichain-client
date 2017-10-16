@@ -1,7 +1,5 @@
 package multichain
 
-import "fmt"
-
 func (client *Client) GetAddresses(verbose bool) (Response, error) {
 
 	msg := map[string]interface{}{
@@ -9,7 +7,7 @@ func (client *Client) GetAddresses(verbose bool) (Response, error) {
 		"id": CONST_ID,
 		"method": "getaddresses",
 		"params": []interface{}{
-			fmt.Sprintf("verbose=%v", verbose),
+			verbose,
 		},
 	}
 
