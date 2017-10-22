@@ -1,6 +1,6 @@
 package multichain
 
-func (client *Client) SignRawTransaction(rawTransaction string, txDataArray []map[string]interface{}, privateKey string) (Response, error) {
+func (client *Client) SignRawTransaction(rawTransaction string, txDataArray []*TxData, privateKey string) (Response, error) {
 
 	msg := map[string]interface{}{
 		"jsonrpc": "1.0",
