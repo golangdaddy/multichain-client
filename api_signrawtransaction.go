@@ -8,6 +8,7 @@ func (client *Client) SignRawTransaction(rawTransaction string, privateKey strin
 		"method": "signrawtransaction",
 		"params": []interface{}{
 			rawTransaction,
+			[]string{},
 			[]string{privateKey},
 		},
 	}
