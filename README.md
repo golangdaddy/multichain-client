@@ -4,7 +4,9 @@ This library will allow you to complete a basic set of functions with either the
 
 You should be able to issue, and send assets between addresses.
 
-## Usage
+## Testing
+
+To fully test this package it is neccesary to have a full hot node running at the given parameters.
 
 ```
 
