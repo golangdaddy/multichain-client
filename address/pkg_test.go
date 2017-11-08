@@ -6,6 +6,10 @@ import (
     "encoding/hex"
 )
 
+const (
+    CONST_BCRYPT_DIFF = 10
+)
+
 func TestAddress(t *testing.T) {
 
     t.Run("Test address generation", func (t *testing.T) {
@@ -25,14 +29,16 @@ func TestAddress(t *testing.T) {
 
     t.Run("Test wallet generation", func (t *testing.T) {
 
-        keyPair, err := MultiChainWallet([]byte("seed"), 0)
+        seed := []byte("seed")
+
+        keyPair, err := MultiChainWallet(seed, CONST_BCRYPT_DIFF, 0)
         if err != nil {
             t.Error(err)
         }
 
         fmt.Println(keyPair)
 
-        keyPair, err = BitcoinWallet([]byte("seed"), 0)
+        keyPair, err = BitcoinWallet(seed, CONST_BCRYPT_DIFF, 0)
         if err != nil {
             t.Error(err)
         }

@@ -1,8 +1,8 @@
 package address
 
 import (
-//    "fmt"
-//    "time"
+    "fmt"
+    "time"
     "github.com/tyler-smith/go-bip32"
     "golang.org/x/crypto/bcrypt"
 )
@@ -14,17 +14,17 @@ type KeyPair struct {
     Private string
 }
 
-func KeyFromSeed(input []byte, index int) (*bip32.Key, *bip32.Key, error) {
+func KeyFromSeed(input []byte, difficulty, index int) (*bip32.Key, *bip32.Key, error) {
 
-//  t := time.Now()
+    t := time.Now()
 
     // 90 ms of protection
-    seed, err := bcrypt.GenerateFromPassword(input, 10)
+    seed, err := bcrypt.GenerateFromPassword(input, difficulty)
     if err != nil {
         return nil, nil, err
     }
 
-//  fmt.Println(time.Since(t))
+    fmt.Printf("bcrypt difficulty %v elaspsed: %v\n", difficulty, time.Since(t))
 
     masterKey, err := bip32.NewMasterKey(seed)
     if err != nil {
@@ -39,9 +39,9 @@ func KeyFromSeed(input []byte, index int) (*bip32.Key, *bip32.Key, error) {
     return masterKey, childKey, nil
 }
 
-func MultiChainWallet(seed []byte, index int) (*KeyPair, error) {
+func MultiChainWallet(seed []byte, difficulty, index int) (*KeyPair, error) {
 
-    _, key, err := KeyFromSeed(seed, index)
+    _, key, err := KeyFromSeed(seed, difficulty, index)
     if err != nil {
         return nil, err
     }
@@ -61,9 +61,9 @@ func MultiChainWallet(seed []byte, index int) (*KeyPair, error) {
     return keyPair, nil
 }
 
-func BitcoinWallet(seed []byte, index int) (*KeyPair, error) {
+func BitcoinWallet(seed []byte, difficulty, index int) (*KeyPair, error) {
 
-    _, key, err := KeyFromSeed(seed, index)
+    _, key, err := KeyFromSeed(seed, difficulty, index)
     if err != nil {
         return nil, err
     }
