@@ -34,7 +34,7 @@ You should be able to issue, and send assets between addresses.
 ```
 ## Deterministic Wallets
 
-Using the address package within this repo, you can create a deterministic keypair with WIF encoded private-key, and Bitcoin or MultiChain encoded public key.
+Using the address package within this repo, you can create a deterministic keypair with WIF-encoded private-key, and Bitcoin or MultiChain encoded public address.
 
 ```
 
