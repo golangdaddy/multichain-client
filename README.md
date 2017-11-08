@@ -16,7 +16,7 @@ You should be able to issue, and send assets between addresses.
 
   flag.Parse()
 
-  client := NewClient(
+  client := multichain.NewClient(
       *chain,
       *host,
       *port,
