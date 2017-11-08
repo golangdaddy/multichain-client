@@ -6,7 +6,7 @@ import (
 
 func TestCreate(t *testing.T) {
 
-	_, err := client.GetInfo()
+	_, err := client.Create("stream", "testStream", true)
 	if err != nil {
 		t.Fail()
 	}
