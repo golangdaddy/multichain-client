@@ -1,5 +1,9 @@
 # Golang client library for MultiChain blockchain
 
+This library will allow you to complete a basic set of functions with either the hot or cold MultiChain nodes.
+
+You should be able to issue, and send assets between addresses.
+
 ## Usage
 
 ```
