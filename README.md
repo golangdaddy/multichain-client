@@ -45,9 +45,33 @@ type KeyPair struct {
     Private string
 }
 
-        keyPair, err := address.MultiChainWallet([]byte("seed"), 0)
-        if err != nil {
-            t.Error(err)
-        }
+```
 
+Here is an example of making a multichain HD wallet.
+
+```
+package main
+
+import (
+    "fmt"
+    "github.com/golangdaddy/multichain-client/address"
+)
+
+const (
+    CONST_BCRYPT_DIFF = 10
+)
+
+func main() {
+
+        seed := []byte("seed")
+        keyChildIndex := 0
+
+        // create a new wallet
+        keyPair, err := address.MultiChainWallet(seed, CONST_BCRYPT_DIFF, keyChildIndex)
+        if err != nil {
+            panic(err)
+        }
+        
+        fmt.Println(keyPair)
+}
 ```
