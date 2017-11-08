@@ -35,3 +35,19 @@ You should be able to issue, and send assets between addresses.
 ## Deterministic Wallets
 
 Using the address package within this repo, you can create a deterministic keypair with WIF encoded private-key, and Bitcoin or MultiChain encoded public key.
+
+```
+
+type KeyPair struct {
+    Type string
+    Index int
+    Public string
+    Private string
+}
+
+        keyPair, err := address.MultiChainWallet([]byte("seed"), 0)
+        if err != nil {
+            t.Error(err)
+        }
+
+```
