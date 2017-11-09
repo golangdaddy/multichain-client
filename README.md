@@ -4,6 +4,8 @@ This library will allow you to complete a basic set of functions with either the
 
 You should be able to issue, and send assets between addresses.
 
+If you wish to contribute to flesh out the remaining API calls, please make pull requests.
+
 ## Testing
 
 To fully test this package it is neccesary to have a full hot node running at the given parameters.
@@ -65,15 +67,23 @@ const (
 
 func main() {
 
-        seed := []byte("seed")
-        keyChildIndex := 0
+    seed := []byte("seed")
+    keyChildIndex := 0
 
-        // create a new wallet
-        keyPair, err := address.MultiChainWallet(seed, CONST_BCRYPT_DIFF, keyChildIndex)
-        if err != nil {
-            panic(err)
-        }
+    // create a new wallet
+    keyPair, err := address.MultiChainWallet(seed, CONST_BCRYPT_DIFF, keyChildIndex)
+    if err != nil {
+        panic(err)
+    }
         
         fmt.Println(keyPair)
 }
+```
+
+If you have an existing private key, you can export it's MultiChain address from the public key with the MultiChainAddress function.
+
+```
+
+    addr, err := address.MultiChainAddress(pubKeyBytes)    
+
 ```
