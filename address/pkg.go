@@ -9,8 +9,8 @@ import (
 )
 
 const (
-    CONST_ADDRESS_PUBKEYHASH_VERSION = "00AFEA21"
-    CONST_ADDRESS_CHECKSUM_VALUE = "953ABC69"
+    CONST_ADDRESS_PUBKEYHASH_VERSION = "003520c0"
+    CONST_ADDRESS_CHECKSUM_VALUE = "217cab53"
 )
 
 var address_pubkeyhash_version []byte
@@ -33,6 +33,7 @@ func sha(b []byte) []byte {
 }
 
 func wif(key []byte) string {
+
     stage1 := bytes.Join(
 		[][]byte{
 			[]byte{byte(0x80)},
