@@ -1,10 +1,14 @@
 # Golang client library for MultiChain blockchain
 
-This library will allow you to complete a basic set of functions with either the hot or cold MultiChain nodes.
+This library will allow you to complete a basic set of functions with a MultiChain node.
 
 You should be able to issue, and send assets between addresses.
 
-## Usage
+If you wish to contribute to flesh out the remaining API calls, please make pull requests.
+
+## Testing
+
+To fully test this package it is neccesary to have a full hot node running at the given parameters.
 
 ```
 
@@ -34,7 +38,7 @@ You should be able to issue, and send assets between addresses.
 ```
 ## Deterministic Wallets
 
-Using the address package within this repo, you can create a deterministic keypair with WIF encoded private-key, and Bitcoin or MultiChain encoded public key.
+Using the address package within this repo, you can create a deterministic keypair with WIF-encoded private-key, and Bitcoin or MultiChain encoded public address.
 
 ```
 
@@ -45,9 +49,41 @@ type KeyPair struct {
     Private string
 }
 
-        keyPair, err := address.MultiChainWallet([]byte("seed"), 0)
-        if err != nil {
-            t.Error(err)
-        }
+```
+
+Here is an example of making a multichain HD wallet.
+
+```
+package main
+
+import (
+    "fmt"
+    "github.com/golangdaddy/multichain-client/address"
+)
+
+const (
+    CONST_BCRYPT_DIFF = 10
+)
+
+func main() {
+
+    seed := []byte("seed")
+    keyChildIndex := 0
+
+    // create a new wallet
+    keyPair, err := address.MultiChainWallet(seed, CONST_BCRYPT_DIFF, keyChildIndex)
+    if err != nil {
+        panic(err)
+    }
+        
+        fmt.Println(keyPair)
+}
+```
+
+If you have an existing private key, you can export it's MultiChain address from the public key with the MultiChainAddress function.
+
+```
+
+    addr, err := address.MultiChainAddress(pubKeyBytes)    
 
 ```
