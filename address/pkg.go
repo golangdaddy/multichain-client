@@ -1,24 +1,26 @@
 package address
 
 import (
-    "bytes"
     "crypto/sha256"
     "encoding/hex"
-    "github.com/mr-tron/base58/base58"
     "golang.org/x/crypto/ripemd160"
 )
 
 const (
-    CONST_ADDRESS_PUBKEYHASH_VERSION = "003520c0"
-    CONST_ADDRESS_CHECKSUM_VALUE = "217cab53"
+    CONST_UNCONFIGURED = "CALL THE CONFIGURE METHOD WITH YOUR BLOCKCHAIN PARAMS FIRST"
 )
 
+var configued bool
+
+var private_key_version []byte
 var address_pubkeyhash_version []byte
 var address_checksum_value []byte
 
-func init() {
-    address_pubkeyhash_version, _ = hex.DecodeString(CONST_ADDRESS_PUBKEYHASH_VERSION)
-    address_checksum_value, _ = hex.DecodeString(CONST_ADDRESS_CHECKSUM_VALUE)
+func Configure(privateKeyVersion, addressPubkeyhashVersion, addressChecksumValue string) {
+    private_key_version, _ = hex.DecodeString(privateKeyVersion)
+    address_pubkeyhash_version, _ = hex.DecodeString(addressPubkeyhashVersion)
+    address_checksum_value, _ = hex.DecodeString(addressChecksumValue)
+    configued = true
 }
 
 func ripemd(b []byte) []byte {
@@ -30,33 +32,6 @@ func ripemd(b []byte) []byte {
 func sha(b []byte) []byte {
     c := sha256.Sum256(b)
     return c[:]
-}
-
-func wif(key []byte) string {
-
-    stage1 := bytes.Join(
-		[][]byte{
-			[]byte{byte(0x80)},
-			key,
-		},
-		nil,
-	)
-
-	stage2 := sha(
-		sha(
-			stage1,
-		),
-	)[:4]
-
-	stage3 := bytes.Join(
-		[][]byte{
-			stage1,
-			stage2,
-		},
-		nil,
-	)
-
-    return base58.FastBase58Encoding(stage3)
 }
 
 func safeXORBytes(dst, a, b []byte) int {

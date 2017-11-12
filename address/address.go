@@ -1,13 +1,16 @@
 package address
 
 import (
+//    "fmt"
     "github.com/utamaro/gocoin"
     "github.com/mr-tron/base58/base58"
 )
 
 func BitcoinAddress(input []byte) (string, error) {
 
-    privateKey := wif(input)
+    if !configued { panic(CONST_UNCONFIGURED) }
+
+    privateKey := BitcoinWIF(input)
 
     k, err := gocoin.GetKeyFromWIF(privateKey)
     if err != nil {
@@ -20,6 +23,8 @@ func BitcoinAddress(input []byte) (string, error) {
 }
 
 func MultiChainAddress(input []byte) (string, error) {
+
+    if !configued { panic(CONST_UNCONFIGURED) }
 
     x := int(20 / len(address_pubkeyhash_version))
 
@@ -36,7 +41,5 @@ func MultiChainAddress(input []byte) (string, error) {
 
     b = append(extended, b...)
 
-    address := string(base58.FastBase58Encoding(b))
-
-    return address, nil
+    return string(base58.FastBase58Encoding(b)), nil
 }

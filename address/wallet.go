@@ -16,6 +16,8 @@ type KeyPair struct {
 
 func KeyFromSeed(input []byte, difficulty, index int) (*bip32.Key, *bip32.Key, error) {
 
+    if !configued { panic(CONST_UNCONFIGURED) }
+
     t := time.Now()
 
     // 90 ms of protection
@@ -41,6 +43,8 @@ func KeyFromSeed(input []byte, difficulty, index int) (*bip32.Key, *bip32.Key, e
 
 func MultiChainWallet(seed []byte, difficulty, index int) (*KeyPair, error) {
 
+    if !configued { panic(CONST_UNCONFIGURED) }
+
     _, key, err := KeyFromSeed(seed, difficulty, index)
     if err != nil {
         return nil, err
@@ -55,7 +59,7 @@ func MultiChainWallet(seed []byte, difficulty, index int) (*KeyPair, error) {
         Type: "MultiChain",
         Index: index,
         Public: publicKey,
-        Private: wif(key.Key),
+        Private: MultiChainWIF(key.Key),
     }
 
     return keyPair, nil
@@ -77,7 +81,7 @@ func BitcoinWallet(seed []byte, difficulty, index int) (*KeyPair, error) {
         Type: "Bitcoin",
         Index: index,
         Public: publicKey,
-        Private: wif(key.Key),
+        Private: BitcoinWIF(key.Key),
     }
 
     return keyPair, nil
