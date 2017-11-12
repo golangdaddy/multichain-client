@@ -16,4 +16,6 @@ func TestPackage(t *testing.T) {
     params.Int("max-std-op-return-size")
 
     params.String("chain-name")
+
+    params.Float64("test-float")
 }

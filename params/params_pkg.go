@@ -74,6 +74,18 @@ func (params Params) Int(key string) int {
     return i
 }
 
+func (params Params) Float64(key string) int {
+
+    value := params[key]
+
+    i, err := strconv.ParseFloat(value, 64)
+    if err != nil {
+        panic(err)
+    }
+
+    return i
+}
+
 func (params Params) String(key string) string {
 
     return params[key]

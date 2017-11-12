@@ -11,6 +11,8 @@
 
 # Basic chain parameters
 
+test-float = 0.98
+
 only-accept-std-txs = true              # Only accept and relay transactions which qualify as 'standard'.
 max-std-tx-size = 4194304               # Maximum size of standard transactions, in bytes. (1024 - 100000000)
 max-std-op-returns-count = 10           # Maximum number of OP_RETURN metadata outputs in standard transactions. (0 - 1024)
