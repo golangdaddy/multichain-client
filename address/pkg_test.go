@@ -30,7 +30,7 @@ func TestAddress(t *testing.T) {
 
         keyPair := DebugKeyPair()
 
-        if keyPair.Public != "1Yu2BuptuZSiBWfr2Qy4aic6qEVnwPWrdkHPEc" {
+        if keyPair.Public != "1Yu2BuptuZSiBWfr2Qy4aic6qEVnwPWrjddvYh" {
             t.Error("INVALID PUBLIC ADDRESSS GENERATED")
         }
 
