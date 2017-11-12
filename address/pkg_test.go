@@ -3,7 +3,6 @@ package address
 import (
     "fmt"
     "testing"
-    "encoding/hex"
 )
 
 const (
@@ -29,16 +28,9 @@ func TestAddress(t *testing.T) {
 
     t.Run("Test public address generation", func (t *testing.T) {
 
-        b, _ := hex.DecodeString("0284E5235E299AF81EBE1653AC5F06B60E13A3A81F918018CBD10CE695095B3E24")
+        keyPair := DebugKeyPair()
 
-        pubAddress, err := MultiChainAddress(b)
-        if err != nil {
-            t.Error(err)
-        }
-
-        fmt.Println(pubAddress)
-
-        if pubAddress != "1Yu2BuptuZSiBWfr2Qy4aic6qEVnwPWrdkHPEc" {
+        if keyPair.Public != "1Yu2BuptuZSiBWfr2Qy4aic6qEVnwPWrdkHPEc" {
             t.Error("INVALID PUBLIC ADDRESSS GENERATED")
         }
 
@@ -48,13 +40,9 @@ func TestAddress(t *testing.T) {
 
     t.Run("Test private key wif generation", func (t *testing.T) {
 
-        b, _ := hex.DecodeString("B69CA8FFAE36F11AD445625E35BF6AC57D6642DDBE470DD3E7934291B2000D78")
+        keyPair := DebugKeyPair()
 
-        wif := MultiChainWIF(b)
-
-        fmt.Println(wif)
-
-        if wif != "VEEWgYhDhqWnNnDCXXjirJYXGDFPjH1B8v6hmcnj1kLXrkpxArmz7xXw" {
+        if keyPair.Private != "VEEWgYhDhqWnNnDCXXjirJYXGDFPjH1B8v6hmcnj1kLXrkpxArmz7xXw" {
             t.Error("INVALID PRIVATE ADDRESSS GENERATED")
         }
 
