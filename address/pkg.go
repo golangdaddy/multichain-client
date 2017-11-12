@@ -43,4 +43,22 @@ func safeXORBytes(dst, a, b []byte) int {
   		dst[i] = a[i] ^ b[i]
   	}
   	return n
-  }
+}
+
+func DebugKeyPair() *KeyPair {
+
+    b, _ := hex.DecodeString("0284E5235E299AF81EBE1653AC5F06B60E13A3A81F918018CBD10CE695095B3E24")
+
+    pubAddress, err := MultiChainAddress(b)
+    if err != nil {
+        panic(err)
+    }
+
+    b, _ = hex.DecodeString("B69CA8FFAE36F11AD445625E35BF6AC57D6642DDBE470DD3E7934291B2000D78")
+
+    return &KeyPair{
+        Type: "MultiChainDebug",
+        Private: MultiChainWIF(b),
+        Public: pubAddress,
+    }
+}
