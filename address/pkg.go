@@ -47,6 +47,8 @@ func safeXORBytes(dst, a, b []byte) int {
 
 func DebugKeyPair() *KeyPair {
 
+    Configure("8025B89E", "00AFEA21", "7B7AEF76")
+
     b, _ := hex.DecodeString("0284E5235E299AF81EBE1653AC5F06B60E13A3A81F918018CBD10CE695095B3E24")
 
     pubAddress, err := MultiChainAddress(b)
