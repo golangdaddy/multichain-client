@@ -6,8 +6,14 @@ import (
 
 func TestPackage(t *testing.T) {
 
-    _, err := Open("params.dat")
+    params, err := Open("params.dat")
     if err != nil {
         panic(err)
     }
+
+    params.Bool("only-accept-std-txs")
+
+    params.Int("max-std-op-return-size")
+
+    params.String("chain-name")
 }

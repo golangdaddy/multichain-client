@@ -23,11 +23,11 @@ func Open(pathToFile string) (Params, error) {
 
         line = strings.TrimSpace(line)
 
-        if len(line) == 0 { continue }
+        parts := strings.Split(line, "#")
 
-        if string(line[0]) == "#" { continue }
+        if len(parts[0]) == 0 { continue }
 
-        kv := strings.Split(line, "=")
+        kv := strings.Split(strings.TrimSpace(parts[0]), "=")
 
         k := strings.TrimSpace(kv[0])
         v := strings.TrimSpace(kv[1])
@@ -57,7 +57,7 @@ func (params Params) Bool(key string) bool {
 
     }
 
-    panic("Invalid BOOL value for key: "+key)
+    panic("Invalid BOOL value for key: "+key+" - "+value)
 
     return false
 }
