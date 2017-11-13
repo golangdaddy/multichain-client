@@ -74,7 +74,7 @@ func (params Params) Int(key string) int {
     return i
 }
 
-func (params Params) Float64(key string) int {
+func (params Params) Float64(key string) float64 {
 
     value := params[key]
 
