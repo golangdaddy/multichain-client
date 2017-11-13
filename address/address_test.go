@@ -11,7 +11,11 @@ const (
 
 func TestAddress(t *testing.T) {
 
-    Configure("8025B89E", "00AFEA21", "953ABC69")
+    Configure(&Config{
+        PrivateKeyVersion: "8025B89E",
+        AddressPubkeyhashVersion: "00AFEA21",
+        AddressChecksumValue: "953ABC69",
+    })
 
     t.Run("Test MultiChain wallet generation", func (t *testing.T) {
 
@@ -36,7 +40,11 @@ func TestAddress(t *testing.T) {
 
     })
 
-    Configure("8025B89E", "00AFEA21", "7B7AEF76")
+    Configure(&Config{
+        PrivateKeyVersion: "8025B89E",
+        AddressPubkeyhashVersion: "00AFEA21",
+        AddressChecksumValue: "7B7AEF76",
+    })
 
     t.Run("Test private key wif generation", func (t *testing.T) {
 

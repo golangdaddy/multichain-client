@@ -16,10 +16,16 @@ var private_key_version []byte
 var address_pubkeyhash_version []byte
 var address_checksum_value []byte
 
-func Configure(privateKeyVersion, addressPubkeyhashVersion, addressChecksumValue string) {
-    private_key_version, _ = hex.DecodeString(privateKeyVersion)
-    address_pubkeyhash_version, _ = hex.DecodeString(addressPubkeyhashVersion)
-    address_checksum_value, _ = hex.DecodeString(addressChecksumValue)
+type Config struct {
+    PrivateKeyVersion string
+    AddressPubkeyhashVersion string
+    AddressChecksumValue string
+}
+
+func Configure(config *Config) {
+    private_key_version, _ = hex.DecodeString(config.PrivateKeyVersion)
+    address_pubkeyhash_version, _ = hex.DecodeString(config.AddressPubkeyhashVersion)
+    address_checksum_value, _ = hex.DecodeString(config.AddressChecksumValue)
     configued = true
 }
 
@@ -47,7 +53,11 @@ func safeXORBytes(dst, a, b []byte) int {
 
 func DebugKeyPair() *KeyPair {
 
-    Configure("8025B89E", "00AFEA21", "7B7AEF76")
+    Configure(&Config{
+        PrivateKeyVersion: "8025B89E",
+        AddressPubkeyhashVersion: "00AFEA21",
+        AddressChecksumValue: "7B7AEF76",
+    })
 
     b, _ := hex.DecodeString("0284E5235E299AF81EBE1653AC5F06B60E13A3A81F918018CBD10CE695095B3E24")
 
