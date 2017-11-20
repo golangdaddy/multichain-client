@@ -59,6 +59,7 @@ package main
 import (
     "fmt"
     "github.com/golangdaddy/multichain-client/address"
+    "github.com/golangdaddy/multichain-client/params"
 )
 
 const (
@@ -66,6 +67,19 @@ const (
 )
 
 func main() {
+
+    // you need to refer to your params.dat file to get the needed config parameters
+    cfg, err := params.Open("./multichain-cold/params.dat")
+    if err != nil {
+        panic(err)
+    }
+
+    // The address package handles the encoding of keys, so it needs to be configued.
+    address.Configure(&address.Config{
+        PrivateKeyVersion: cfg.String("private-key-version"),
+        AddressPubkeyhashVersion: cfg.String("address-pubkeyhash-version"),
+        AddressChecksumValue: cfg.String("address-checksum-value"),
+    })
 
     seed := []byte("seed")
     keyChildIndex := 0
@@ -75,15 +89,23 @@ func main() {
     if err != nil {
         panic(err)
     }
-        
-        fmt.Println(keyPair)
+    
+    fmt.Println(keyPair)
 }
 ```
 
-If you have an existing private key, you can export it's MultiChain address from the public key with the MultiChainAddress function.
+If you have an existing private key, you can export it as WIF (Wallet Import Format) which can be used with importprivkey API command with MultiChain.
 
 ```
 
-    addr, err := address.MultiChainAddress(pubKeyBytes)    
+    wif, err := address.MultiChainWIF(privKeyBytes)
+
+```
+
+...or it's MultiChain address from the public key with the MultiChainAddress function.
+
+```
+
+    addr, err := address.MultiChainAddress(pubKeyBytes) 
 
 ```
