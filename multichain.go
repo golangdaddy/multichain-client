@@ -77,22 +77,23 @@ func (client *Client) post(msg interface{}) (Response, error) {
 			continue
 		}
 
-		b, err := ioutil.ReadAll(resp.Body)
-		if err != nil {
+		if resp.StatusCode != 200 {
 			if (i + 1) == len(client.endpoints) {
 				return nil, err
 			}
 			continue
 		}
 
+		b, err := ioutil.ReadAll(resp.Body)
+		if err != nil {
+			return nil, err
+		}
+
 		obj := make(Response)
 
 		err = json.Unmarshal(b, &obj)
 		if err != nil {
-			if (i + 1) == len(client.endpoints) {
-				return nil, err
-			}
-			continue
+			return nil, err
 		}
 
 		if obj["error"] != nil {
