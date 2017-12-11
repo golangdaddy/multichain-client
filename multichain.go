@@ -25,6 +25,7 @@ func (r Response) Result() interface{} {
 type Client struct {
 	chain string
 	httpClient *http.Client
+	Domain string
 	port string
 	endpoints []string
 	credentials string
@@ -50,7 +51,7 @@ func (client *Client) ViaNodes(hosts []int) *Client {
 
 	for _, host := range hosts {
 
-		c.endpoints = append(c.endpoints, fmt.Sprintf("http://%s:%s", host, client.port))
+		c.endpoints = append(c.endpoints, fmt.Sprintf("http://%v.:%s", host, client.Domain, client.port))
 
 	}
 
