@@ -60,7 +60,7 @@ func (client *Client) ViaNodes(hosts []int) *Client {
 
 	for _, host := range hosts {
 
-		c.endpoints = append(c.endpoints, fmt.Sprintf("http://%v.:%s", host, client.Domain, client.port))
+		c.endpoints = append(c.endpoints, fmt.Sprintf("http://%v.%s:%s", host, client.Domain, client.port))
 
 	}
 
