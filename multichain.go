@@ -9,6 +9,9 @@ import (
 	"encoding/json"
 	"encoding/base64"
 	//
+	"golang.org/x/net/context"
+	"google.golang.org/appengine/urlfetch"
+	//
 	"github.com/dghubble/sling"
 )
 
@@ -43,6 +46,11 @@ func NewClient(chain, host, port, username, password string) *Client {
 		endpoints: []string{fmt.Sprintf("http://%s:%s", host, port)},
 		credentials: base64.StdEncoding.EncodeToString([]byte(credentials)),
 	}
+}
+
+func (client *Client) Urlfetch(ctx context.Context) {
+
+	client.httpClient = urlfetch.Client(ctx)
 }
 
 // Creates a new temporary config for calling an RPC method on the specified node
