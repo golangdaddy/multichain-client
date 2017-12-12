@@ -23,9 +23,9 @@ func (r Response) Result() interface{} {
 }
 
 type Client struct {
+	Domain string
 	chain string
 	httpClient *http.Client
-	Domain string
 	port string
 	endpoints []string
 	credentials string
@@ -36,6 +36,7 @@ func NewClient(chain, host, port, username, password string) *Client {
 	credentials := username + ":" + password
 
 	return &Client{
+		Domain: host,
 		chain: chain,
 		httpClient: &http.Client{},
 		port: port,
