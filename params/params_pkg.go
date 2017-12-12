@@ -30,7 +30,7 @@ func Open(pathToFile string) (Params, error) {
         kv := strings.Split(strings.TrimSpace(parts[0]), "=")
 
         if len(kv) == 1 {
-            panic(blob)
+            continue
         }
 
         k := strings.TrimSpace(kv[0])
