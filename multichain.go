@@ -52,13 +52,36 @@ func (client *Client) DebugMode() {
 	client.debug = true
 }
 
-func (client *Client) Msg(method string, params []interface{}) map[string]interface{} {
+func (client *Client) msg(params []interface{}) map[string]interface{} {
 	return map[string]interface{}{
 		"jsonrpc": "1.0",
 		"id": CONST_ID,
-		"method": fmt.Sprintf("%s %s", client.chain, method),
 		"params": params,
 	}
+}
+
+func (client *Client) NodeMsg(method string, params []interface{}) map[string]interface{} {
+
+	msg := client.msg(params)
+	msg["method"] = fmt.Sprintf("%s", method)
+
+	if client.debug {
+		fmt.Println(msg)
+	}
+
+	return msg
+}
+
+func (client *Client) ChainMsg(method string, params []interface{}) map[string]interface{} {
+
+	msg := client.msg(params)
+	msg["method"] = fmt.Sprintf("%s %s", client.chain, method)
+
+	if client.debug {
+		fmt.Println(msg)
+	}
+
+	return msg
 }
 
 func (client *Client) Urlfetch(ctx context.Context) {
@@ -125,9 +148,9 @@ func (client *Client) post(msg interface{}) (Response, error) {
 			var s string
 			m, ok := msg.(map[string]interface{})
 			if ok {
-				s = fmt.Sprintf("multichaind/%s: %s", m["method"], e["message"].(string))
+				s = fmt.Sprintf("multichaind - '%s': %s", m["method"], e["message"].(string))
 			} else {
-				s = fmt.Sprintf("multichaind: %s", e["message"].(string))
+				s = fmt.Sprintf("multichaind - %s", e["message"].(string))
 			}
 			if (i + 1) == len(client.endpoints) {
 				return nil, errors.New(s)

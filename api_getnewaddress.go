@@ -2,7 +2,7 @@ package multichain
 
 func (client *Client) GetNewAddress() (Response, error) {
 
-	msg := client.Msg(
+	msg := client.ChainMsg(
 		"getnewaddress",
 		[]interface{}{},
 	)

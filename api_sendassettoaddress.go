@@ -2,7 +2,7 @@ package multichain
 
 func (client *Client) SendAssetToAddress(accountAddress, assetName string, value float64) (Response, error) {
 
-	msg := client.Msg(
+	msg := client.NodeMsg(
 		"sendassettoaddress",
 		[]interface{}{
 			accountAddress,

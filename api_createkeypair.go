@@ -2,7 +2,7 @@ package multichain
 
 func (client *Client) CreateKeypair() ([]*AddressKeyPair, error) {
 
-	msg := client.Msg(
+	msg := client.NodeMsg(
 		"createkeypairs",
 		[]interface{}{},
 	)
