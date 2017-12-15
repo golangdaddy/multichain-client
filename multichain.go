@@ -104,13 +104,6 @@ func (client *Client) post(msg interface{}) (Response, error) {
 			fmt.Println(string(b))
 		}
 
-		if resp.StatusCode != 200 {
-			if (i + 1) == len(client.endpoints) {
-				return nil, err
-			}
-			continue
-		}
-
 		obj := make(Response)
 
 		err = json.Unmarshal(b, &obj)
@@ -127,7 +120,17 @@ func (client *Client) post(msg interface{}) (Response, error) {
 			} else {
 				s = fmt.Sprintf("multichaind: %s", e["message"].(string))
 			}
-			return nil, errors.New(s)
+			if (i + 1) == len(client.endpoints) {
+				return nil, errors.New(s)
+			}
+			continue
+		}
+
+		if resp.StatusCode != 200 {
+			if (i + 1) == len(client.endpoints) {
+				return nil, err
+			}
+			continue
 		}
 
 		return obj, nil
