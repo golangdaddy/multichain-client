@@ -2,16 +2,14 @@ package multichain
 
 func (client *Client) IssueMore(accountAddress, assetName string, value float64) (Response, error) {
 
-	msg := map[string]interface{}{
-		"jsonrpc": "1.0",
-		"id": CONST_ID,
-		"method": "issuemore",
-		"params": []interface{}{
+	msg := client.Msg(
+		"issuemore",
+		[]interface{}{
 			accountAddress,
 			assetName,
 			value,
 		},
-	}
+	)
 
 	obj, err := client.post(msg)
 	if err != nil {

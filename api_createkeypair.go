@@ -2,12 +2,10 @@ package multichain
 
 func (client *Client) CreateKeypair() ([]*AddressKeyPair, error) {
 
-	msg := map[string]interface{}{
-		"jsonrpc": "1.0",
-		"id": CONST_ID,
-		"method": "createkeypairs",
-		"params": []interface{}{},
-	}
+	msg := client.Msg(
+		"createkeypairs",
+		[]interface{}{},
+	)
 
 	obj, err := client.post(msg)
 	if err != nil {

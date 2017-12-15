@@ -52,6 +52,15 @@ func (client *Client) DebugMode() {
 	client.debug = true
 }
 
+func (client *Client) Msg(method string, params []interface{}) map[string]interface{} {
+	return map[string]interface{}{
+		"jsonrpc": "1.0",
+		"id": CONST_ID,
+		"method": fmt.Sprintf("%s %s", client.chain, method),
+		"params": params,
+	}
+}
+
 func (client *Client) Urlfetch(ctx context.Context) {
 
 	client.httpClient = urlfetch.Client(ctx)
