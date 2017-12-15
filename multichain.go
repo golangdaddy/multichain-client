@@ -3,7 +3,6 @@ package multichain
 import (
 	"fmt"
 	"errors"
-	"strings"
 	"net/http"
 	"io/ioutil"
 	"encoding/json"
@@ -32,6 +31,7 @@ type Client struct {
 	port string
 	endpoints []string
 	credentials string
+	debug bool
 }
 
 func NewClient(chain, host, port, username, password string) *Client {
@@ -46,6 +46,10 @@ func NewClient(chain, host, port, username, password string) *Client {
 		endpoints: []string{fmt.Sprintf("http://%s:%s", host, port)},
 		credentials: base64.StdEncoding.EncodeToString([]byte(credentials)),
 	}
+}
+
+func (client *Client) DebugMode() {
+	client.debug = true
 }
 
 func (client *Client) Urlfetch(ctx context.Context) {
@@ -65,10 +69,6 @@ func (client *Client) ViaNodes(hosts []int) *Client {
 	}
 
 	return &c
-}
-
-func (client *Client) debug() string {
-	return strings.Join(client.endpoints, " ") + " " + client.credentials
 }
 
 func (client *Client) post(msg interface{}) (Response, error) {
@@ -97,6 +97,10 @@ func (client *Client) post(msg interface{}) (Response, error) {
 		b, err := ioutil.ReadAll(resp.Body)
 		if err != nil {
 			return nil, err
+		}
+
+		if client.debug {
+			fmt.Println(string(b))
 		}
 
 		obj := make(Response)
