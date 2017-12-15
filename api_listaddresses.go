@@ -1,10 +1,27 @@
 package multichain
 
-func (client *Client) ListAddresses(address string) (Response, error) {
+import "fmt"
+
+func (client *Client) ListAddresses(verbose bool, addresses ...string) (Response, error) {
+
+	v := fmt.Sprintf("verbose=%v", verbose)
+
+	var params []interface{}
+
+	if len(addresses) > 0 {
+		params = []interface{}{
+			addresses,
+			v,
+		}
+	} else {
+		params = []interface{}{
+			v,
+		}
+	}
 
 	msg := client.NodeMsg(
 		"listaddresses",
-		[]interface{}{},
+		params,
 	)
 
 	return client.post(msg)
