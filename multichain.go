@@ -61,6 +61,7 @@ func (client *Client) Urlfetch(ctx context.Context) {
 func (client *Client) ViaNodes(hosts []int) *Client {
 
 	c := *client
+	c.endpoints = []string{}
 
 	for _, host := range hosts {
 
@@ -72,6 +73,10 @@ func (client *Client) ViaNodes(hosts []int) *Client {
 }
 
 func (client *Client) post(msg interface{}) (Response, error) {
+
+	if client.debug {
+		fmt.Println(client)
+	}
 
 	for i, endpoint := range client.endpoints {
 
