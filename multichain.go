@@ -43,7 +43,7 @@ func NewClient(chain, host, port, username, password string) *Client {
 		chain: chain,
 		httpClient: &http.Client{},
 		port: port,
-		endpoints: []string{fmt.Sprintf("http://%s@%s:%s", chain, host, port)},
+		endpoints: []string{fmt.Sprintf("http://%s:%s", host, port)},
 		credentials: base64.StdEncoding.EncodeToString([]byte(credentials)),
 	}
 }
@@ -97,7 +97,7 @@ func (client *Client) ViaNodes(hosts []int) *Client {
 
 	for _, host := range hosts {
 
-		c.endpoints = append(c.endpoints, fmt.Sprintf("http://%s@%v.%s:%s", client.chain, host, client.Domain, client.port))
+		c.endpoints = append(c.endpoints, fmt.Sprintf("http://%v.%s:%s", host, client.Domain, client.port))
 
 	}
 

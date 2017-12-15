@@ -14,8 +14,11 @@ func (client *Client) ListAddresses(verbose bool, addresses ...string) (Response
 			v,
 		}
 	} else {
-		params = []interface{}{
-			v,
+		if verbose {
+			params = []interface{}{
+				[]string{},
+				v,
+			}
 		}
 	}
 
