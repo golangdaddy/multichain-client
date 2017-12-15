@@ -81,18 +81,14 @@ func (client *Client) post(msg interface{}) (Response, error) {
 	for i, endpoint := range client.endpoints {
 
 		request, err := sling.New().Post(endpoint).BodyJSON(msg).Request()
+		if err != nil {
+			return nil, err
+		}
 
 		request.Header.Add("Authorization", "Basic " + client.credentials)
 
 		resp, err := client.httpClient.Do(request)
 		if err != nil {
-			if (i + 1) == len(client.endpoints) {
-				return nil, err
-			}
-			continue
-		}
-
-		if resp.StatusCode != 200 {
 			if (i + 1) == len(client.endpoints) {
 				return nil, err
 			}
@@ -106,6 +102,13 @@ func (client *Client) post(msg interface{}) (Response, error) {
 
 		if client.debug {
 			fmt.Println(string(b))
+		}
+
+		if resp.StatusCode != 200 {
+			if (i + 1) == len(client.endpoints) {
+				return nil, err
+			}
+			continue
 		}
 
 		obj := make(Response)
