@@ -37,10 +37,5 @@ func (client *Client) ListStreams(streams string, start, count int, verbose bool
 		"params": params,
 	}
 
-	obj, err := client.post(msg)
-	if err != nil {
-		return nil, err
-	}
-
-	return obj, nil
+	return client.post(msg)
 }

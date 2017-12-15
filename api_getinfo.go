@@ -7,10 +7,5 @@ func (client *Client) GetInfo() (Response, error) {
 		[]interface{}{},
 	)
 
-	obj, err := client.post(msg)
-	if err != nil {
-		return nil, err
-	}
-
-	return obj, nil
+	return client.post(msg)
 }

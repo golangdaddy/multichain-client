@@ -8,10 +8,5 @@ func (client *Client) ImportAddress(pubKey, label string, rescan bool) (Response
 		[]interface{}{pubKey, label, rescan},
 	)
 
-	obj, err := client.post(msg)
-	if err != nil {
-		return nil, err
-	}
-
-	return obj, nil
+	return client.post(msg)
 }

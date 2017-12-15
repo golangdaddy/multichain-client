@@ -16,10 +16,5 @@ func (client *Client) Create(typeName, name string, open bool) (Response, error)
 		},
 	)
 
-	obj, err := client.post(msg)
-	if err != nil {
-		return nil, err
-	}
-
-	return obj, nil
+	return client.post(msg)
 }

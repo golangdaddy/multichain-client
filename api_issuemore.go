@@ -11,10 +11,5 @@ func (client *Client) IssueMore(accountAddress, assetName string, value float64)
 		},
 	)
 
-	obj, err := client.post(msg)
-	if err != nil {
-		return nil, err
-	}
-
-	return obj, nil
+	return client.post(msg)
 }

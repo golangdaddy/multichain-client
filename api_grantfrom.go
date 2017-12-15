@@ -16,10 +16,5 @@ func (client *Client) GrantFrom(fromAddress string, addresses, permissions []str
         },
 	)
 
-	obj, err := client.post(msg)
-	if err != nil {
-		return nil, err
-	}
-
-	return obj, nil
+	return client.post(msg)
 }

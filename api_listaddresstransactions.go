@@ -1,7 +1,5 @@
 package multichain
 
-import "fmt"
-
 func (client *Client) ListAddressTransactions(address string) (Response, error) {
 
 	msg := client.NodeMsg(
@@ -14,11 +12,5 @@ func (client *Client) ListAddressTransactions(address string) (Response, error) 
 		},
 	)
 
-	obj, err := client.post(msg)
-	if err != nil {
-		fmt.Println(msg)
-		return nil, err
-	}
-
-	return obj, nil
+	return client.post(msg)
 }

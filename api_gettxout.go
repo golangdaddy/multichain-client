@@ -10,10 +10,5 @@ func (client *Client) GetTxOut(txid string, vout int) (Response, error) {
         },
 	)
 
-	obj, err := client.post(msg)
-	if err != nil {
-		return nil, err
-	}
-
-	return obj, nil
+	return client.post(msg)
 }

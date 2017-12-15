@@ -14,10 +14,5 @@ func (client *Client) PrepareLockUnspent(asset string, quantity float64) (Respon
 		},
 	}
 
-	obj, err := client.post(msg)
-	if err != nil {
-		return nil, err
-	}
-
-	return obj, nil
+	return client.post(msg)
 }

@@ -11,10 +11,5 @@ func (client *Client) SendAssetToAddress(accountAddress, assetName string, value
 		},
 	)
 
-	obj, err := client.post(msg)
-	if err != nil {
-		return nil, err
-	}
-
-	return obj, nil
+	return client.post(msg)
 }

@@ -12,10 +12,5 @@ func (client *Client) CreateRawTransaction(destinationAddress string, assets map
 		},
 	)
 
-	obj, err := client.post(msg)
-	if err != nil {
-		return nil, err
-	}
-
-	return obj, nil
+	return client.post(msg)
 }

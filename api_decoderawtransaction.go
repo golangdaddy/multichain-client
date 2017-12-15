@@ -10,10 +10,5 @@ func (client *Client) DecodeRawTransaction(rawTransaction string) (Response, err
 		},
 	)
 
-	obj, err := client.post(msg)
-	if err != nil {
-		return nil, err
-	}
-
-	return obj, nil
+	return client.post(msg)
 }

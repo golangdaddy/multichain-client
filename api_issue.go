@@ -15,10 +15,5 @@ func (client *Client) Issue(isOpen bool, accountAddress, assetName string, quant
 		},
 	)
 
-	obj, err := client.post(msg)
-	if err != nil {
-		return nil, err
-	}
-
-	return obj, nil
+	return client.post(msg)
 }

@@ -13,10 +13,5 @@ func (client *Client) CreateRawSendFrom(watchAddress, destinationAddress string,
 		},
 	)
 
-	obj, err := client.post(msg)
-	if err != nil {
-		return nil, err
-	}
-
-	return obj, nil
+	return client.post(msg)
 }
