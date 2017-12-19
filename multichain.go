@@ -104,6 +104,21 @@ func (client *Client) ViaNodes(hosts []int) *Client {
 	return &c
 }
 
+// Creates a new temporary config for calling an RPC method on the specified node
+func (client *Client) ViaNode(subdomain string) *Client {
+
+	endpoint := fmt.Sprintf("http://%s.%s:%s", subdomain, client.Domain, client.port)
+
+	c := *client
+	c.endpoints = []string{
+		endpoint,
+		endpoint,
+	}
+
+	return &c
+}
+
+
 func (client *Client) post(msg interface{}) (Response, error) {
 
 	if client.debug {
