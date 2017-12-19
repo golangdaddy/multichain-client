@@ -2,7 +2,7 @@ package multichain
 
 func (client *Client) Issue(isOpen bool, accountAddress, assetName string, quantity float64, units float64) (Response, error) {
 
-	msg := client.ChainMsg(
+	msg := client.NodeMsg(
 		"issue",
 		[]interface{}{
 			accountAddress,
