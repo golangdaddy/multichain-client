@@ -122,7 +122,10 @@ func (client *Client) ViaNode(subdomain string) *Client {
 func (client *Client) post(msg interface{}) (Response, error) {
 
 	if client.debug {
+		fmt.Println("DEBUG MODE ON...")
 		fmt.Println(client)
+		b, _ := json.Marshal(msg)
+		fmt.Println(string(b))
 	}
 
 	for i, endpoint := range client.endpoints {
