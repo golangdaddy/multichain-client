@@ -9,7 +9,6 @@ import (
 	"encoding/json"
 	"encoding/base64"
 	//
-	"golang.org/x/oauth2"
 	"golang.org/x/net/context"
 	"google.golang.org/appengine/urlfetch"
 	//
@@ -88,18 +87,9 @@ func (client *Client) ChainMsg(method string, params []interface{}) map[string]i
 
 func (client *Client) Urlfetch(ctx context.Context, duration time.Duration) {
 
-	x, _ := context.WithTimeout(ctx, duration)
+	ctx, _ = context.WithTimeout(ctx, duration)
 
-	y := &oauth2.Transport{
-		Base:   &urlfetch.Transport{
-			Context: x,
-		},
-	}
-
-	c := urlfetch.Client(ctx)
-	c.Transport = y
-
-	client.httpClient = c
+	client.httpClient = urlfetch.Client(ctx)
 }
 
 // Creates a new temporary config for calling an RPC method on the specified node
