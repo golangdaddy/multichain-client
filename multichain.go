@@ -90,13 +90,16 @@ func (client *Client) Urlfetch(ctx context.Context, duration time.Duration) {
 
 	x, _ := context.WithTimeout(ctx, duration)
 
-    client.httpClient = &http.Client{
-        Transport: &oauth2.Transport{
-            Base:   &urlfetch.Transport{
-				Context: x,
-			},
-        },
-    }
+	y := &oauth2.Transport{
+		Base:   &urlfetch.Transport{
+			Context: x,
+		},
+	}
+
+	c := urlfetch.Client(ctx)
+	c.Transport = y
+
+	client.httpClient = c
 }
 
 // Creates a new temporary config for calling an RPC method on the specified node
