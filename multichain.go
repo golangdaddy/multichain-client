@@ -53,6 +53,14 @@ func (client *Client) DebugMode() {
 	client.debug = true
 }
 
+
+func (client *Client) Urlfetch(ctx context.Context, duration time.Duration) {
+
+	ctx, _ = context.WithDeadline(ctx, time.Now().Add(duration))
+
+	client.httpClient = urlfetch.Client(ctx)
+}
+
 func (client *Client) msg(params []interface{}) map[string]interface{} {
 	return map[string]interface{}{
 		"jsonrpc": "1.0",
@@ -83,13 +91,6 @@ func (client *Client) ChainMsg(method string, params []interface{}) map[string]i
 	}
 
 	return msg
-}
-
-func (client *Client) Urlfetch(ctx context.Context, duration time.Duration) {
-
-	ctx, _ = context.WithTimeout(ctx, duration)
-
-	client.httpClient = urlfetch.Client(ctx)
 }
 
 // Creates a new temporary config for calling an RPC method on the specified node
