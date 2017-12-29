@@ -6,7 +6,7 @@ import (
 )
 
 const (
-    CONST_BCRYPT_DIFF = 10
+    CONST_BCRYPT_DIFF = 2000
 )
 
 func TestAddress(t *testing.T) {

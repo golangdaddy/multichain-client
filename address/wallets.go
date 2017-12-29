@@ -4,7 +4,7 @@ import (
     "fmt"
     "time"
     "github.com/tyler-smith/go-bip32"
-    "golang.org/x/crypto/bcrypt"
+    "crypto/sha512"
 )
 
 type KeyPair struct {
@@ -20,15 +20,23 @@ func KeyFromSeed(input []byte, difficulty, index int) (*bip32.Key, *bip32.Key, e
 
     t := time.Now()
 
-    // 90 ms of protection
-    seed, err := bcrypt.GenerateFromPassword(input, difficulty)
-    if err != nil {
-        return nil, nil, err
+    for x := 0; x < difficulty; x++ {
+
+        h := sha512.New512_256()
+        h.Write(input)
+        input = append(input, h.Sum(nil)...)
+
     }
 
-    fmt.Printf("bcrypt difficulty %v elaspsed: %v\n", difficulty, time.Since(t))
+    h := sha512.New512_256()
+    h.Write(input)
+    input = h.Sum(nil)
 
-    masterKey, err := bip32.NewMasterKey(seed)
+    fmt.Println("INPUT:", input)
+
+    fmt.Printf("key lengthening difficulty %v elaspsed: %v\n", difficulty, time.Since(t))
+
+    masterKey, err := bip32.NewMasterKey(input)
     if err != nil {
         return nil, nil, err
     }
