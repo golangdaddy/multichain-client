@@ -2,12 +2,14 @@ package multichain
 
 import (
 	"fmt"
+	"time"
 	"errors"
 	"net/http"
 	"io/ioutil"
 	"encoding/json"
 	"encoding/base64"
 	//
+	"golang.org/x/oauth2"
 	"golang.org/x/net/context"
 	"google.golang.org/appengine/urlfetch"
 	//
@@ -84,9 +86,17 @@ func (client *Client) ChainMsg(method string, params []interface{}) map[string]i
 	return msg
 }
 
-func (client *Client) Urlfetch(ctx context.Context) {
+func (client *Client) Urlfetch(ctx context.Context, duration time.Duration) {
 
-	client.httpClient = urlfetch.Client(ctx)
+	x, _ := context.WithTimeout(ctx, duration)
+
+    client.httpClient = &http.Client{
+        Transport: &oauth2.Transport{
+            Base:   &urlfetch.Transport{
+				Context: x,
+			},
+        },
+    }
 }
 
 // Creates a new temporary config for calling an RPC method on the specified node
