@@ -54,9 +54,14 @@ func (client *Client) DebugMode() {
 }
 
 
-func (client *Client) Urlfetch(ctx context.Context, duration time.Duration) {
+func (client *Client) Urlfetch(ctx context.Context, durations ...time.Duration) {
 
-	ctx, _ = context.WithDeadline(ctx, time.Now().Add(duration))
+	if len(durations) > 0 {
+		ctx, _ = context.WithDeadline(
+			ctx,
+			time.Now().Add(durations[0]),
+		)
+	}
 
 	client.httpClient = urlfetch.Client(ctx)
 }
