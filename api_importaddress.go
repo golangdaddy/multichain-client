@@ -5,7 +5,11 @@ func (client *Client) ImportAddress(pubKey, label string, rescan bool) (Response
 
 	msg := client.NodeMsg(
 		"importaddress",
-		[]interface{}{pubKey, label, rescan},
+		[]interface{}{
+			pubKey,
+			label,
+			rescan,
+		},
 	)
 
 	return client.post(msg)
