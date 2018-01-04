@@ -1,14 +1,13 @@
 package multichain
 
-func (client *Client) CreateRawExchange(txid string, vout int, asset string, quantity float64) (Response, error) {
+func (client *Client) CreateRawTransaction(destinationAddress string, assets map[string]float64, unspentOutputs ...*Unspent) (Response, error) {
 
 	msg := client.NodeMsg(
-		"createrawexchange",
+		"createrawtransaction",
 		[]interface{}{
-			txid,
-			vout,
+			unspentOutputs,
 			map[string]interface{}{
-				asset: quantity,
+				destinationAddress: assets,
 			},
 		},
 	)
