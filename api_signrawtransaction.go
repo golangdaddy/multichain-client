@@ -1,14 +1,19 @@
 package multichain
 
-func (client *Client) SignRawTransaction(rawTransaction string, txDataArray []*TxData, privateKey string) (Response, error) {
+func (client *Client) SignRawTransaction(rawTransaction string, txDataArray []*TxData, privateKey string, args ...string) (Response, error) {
+
+	params := []interface{}{
+		rawTransaction,
+		txDataArray,
+		[]string{privateKey},
+	}
+	for _, arg := range args {
+		params = append(params, arg)		
+	}
 
 	msg := client.NodeMsg(
 		"signrawtransaction",
-		[]interface{}{
-			rawTransaction,
-			txDataArray,
-			[]string{privateKey},
-		},
+		params,
 	)
 
 	return client.post(msg)
