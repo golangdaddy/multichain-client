@@ -106,7 +106,15 @@ func (client *Client) ViaNodes(hosts []int) *Client {
 
 	for _, host := range hosts {
 
-		c.endpoints = append(c.endpoints, fmt.Sprintf("http://%v.%s:%s", host, client.Domain, client.port))
+		c.endpoints = append(
+			c.endpoints,
+			fmt.Sprintf(
+				"http://%v.%s:%s",
+				host,
+				client.Domain,
+				client.port,
+			),
+		)
 
 	}
 
@@ -114,9 +122,13 @@ func (client *Client) ViaNodes(hosts []int) *Client {
 }
 
 // Creates a new temporary config for calling an RPC method on the specified node
-func (client *Client) ViaNode(subdomain string) *Client {
+func (client *Client) ViaNode(ipAddress string, port int) *Client {
 
-	endpoint := fmt.Sprintf("http://%s.%s:%s", subdomain, client.Domain, client.port)
+	endpoint := fmt.Sprintf(
+		"http://%s:%s",
+		ipAddress,
+		port,
+	)
 
 	c := *client
 	c.endpoints = []string{
