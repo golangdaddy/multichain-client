@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"time"
 	"errors"
+	"strconv"
 	"net/http"
 	"io/ioutil"
 	"encoding/json"
@@ -26,25 +27,21 @@ func (r Response) Result() interface{} {
 }
 
 type Client struct {
-	Domain string
-	chain string
 	httpClient *http.Client
-	port string
-	endpoints []string
+	chain string
+	host string
 	credentials string
 	debug bool
 }
 
-func NewClient(chain, host, port, username, password string) *Client {
+func NewClient(chain, host, username, password string) *Client {
 
 	credentials := username + ":" + password
 
 	return &Client{
-		Domain: host,
-		chain: chain,
 		httpClient: &http.Client{},
-		port: port,
-		endpoints: []string{fmt.Sprintf("http://%s:%s", host, port)},
+		chain: chain,
+		host: host,
 		credentials: base64.StdEncoding.EncodeToString([]byte(credentials)),
 	}
 }
@@ -98,48 +95,6 @@ func (client *Client) ChainMsg(method string, params []interface{}) map[string]i
 	return msg
 }
 
-// Creates a new temporary config for calling an RPC method on the specified node
-func (client *Client) ViaNodes(hosts []int) *Client {
-
-	c := *client
-	c.endpoints = []string{}
-
-	for _, host := range hosts {
-
-		c.endpoints = append(
-			c.endpoints,
-			fmt.Sprintf(
-				"http://%v.%s:%s",
-				host,
-				client.Domain,
-				client.port,
-			),
-		)
-
-	}
-
-	return &c
-}
-
-// Creates a new temporary config for calling an RPC method on the specified node
-func (client *Client) ViaNode(ipAddress string, port int) *Client {
-
-	endpoint := fmt.Sprintf(
-		"http://%s:%s",
-		ipAddress,
-		port,
-	)
-
-	c := *client
-	c.endpoints = []string{
-		endpoint,
-		endpoint,
-	}
-
-	return &c
-}
-
-
 func (client *Client) post(msg interface{}) (Response, error) {
 
 	if client.debug {
@@ -149,63 +104,49 @@ func (client *Client) post(msg interface{}) (Response, error) {
 		fmt.Println(string(b))
 	}
 
-	for i, endpoint := range client.endpoints {
-
-		request, err := sling.New().Post(endpoint).BodyJSON(msg).Request()
-		if err != nil {
-			return nil, err
-		}
-
-		request.Header.Add("Authorization", "Basic " + client.credentials)
-
-		resp, err := client.httpClient.Do(request)
-		if err != nil {
-			if (i + 1) == len(client.endpoints) {
-				return nil, err
-			}
-			continue
-		}
-
-		b, err := ioutil.ReadAll(resp.Body)
-		if err != nil {
-			return nil, err
-		}
-
-		if client.debug {
-			fmt.Println(string(b))
-		}
-
-		obj := make(Response)
-
-		err = json.Unmarshal(b, &obj)
-		if err != nil {
-			return nil, err
-		}
-
-		if obj["error"] != nil {
-			e := obj["error"].(map[string]interface{})
-			var s string
-			m, ok := msg.(map[string]interface{})
-			if ok {
-				s = fmt.Sprintf("multichaind - '%s': %s", m["method"], e["message"].(string))
-			} else {
-				s = fmt.Sprintf("multichaind - %s", e["message"].(string))
-			}
-			if (i + 1) == len(client.endpoints) {
-				return nil, errors.New(s)
-			}
-			continue
-		}
-
-		if resp.StatusCode != 200 {
-			if (i + 1) == len(client.endpoints) {
-				return nil, err
-			}
-			continue
-		}
-
-		return obj, nil
+	request, err := sling.New().Post(client.host).BodyJSON(msg).Request()
+	if err != nil {
+		return nil, err
 	}
 
-	return nil, errors.New("PROBABLY NO ENDPOINTS PASSED TO THE REQUEST DISPATCHER")
+	request.Header.Add("Authorization", "Basic " + client.credentials)
+
+	resp, err := client.httpClient.Do(request)
+	if err != nil {
+		return nil, err
+	}
+
+	b, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return nil, err
+	}
+
+	if client.debug {
+		fmt.Println(string(b))
+	}
+
+	obj := make(Response)
+
+	err = json.Unmarshal(b, &obj)
+	if err != nil {
+		return nil, err
+	}
+
+	if obj["error"] != nil {
+		e := obj["error"].(map[string]interface{})
+		var s string
+		m, ok := msg.(map[string]interface{})
+		if ok {
+			s = fmt.Sprintf("multichaind - '%s': %s", m["method"], e["message"].(string))
+		} else {
+			s = fmt.Sprintf("multichaind - %s", e["message"].(string))
+		}
+		return nil, errors.New(s)
+	}
+
+	if resp.StatusCode != 200 {
+		return nil, errors.New("INVALID RESPONSE STATUS CODE: "+strconv.Itoa(resp.StatusCode))
+	}
+
+	return obj, nil
 }
