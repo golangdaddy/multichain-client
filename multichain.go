@@ -30,20 +30,31 @@ type Client struct {
 	httpClient *http.Client
 	chain string
 	host string
+	port int
 	credentials string
 	debug bool
 }
 
-func NewClient(chain, host, username, password string) *Client {
+func NewClient(chain, username, password string, port int) *Client {
 
 	credentials := username + ":" + password
 
 	return &Client{
 		httpClient: &http.Client{},
 		chain: chain,
-		host: host,
+		port: port,
 		credentials: base64.StdEncoding.EncodeToString([]byte(credentials)),
 	}
+}
+
+func (client *Client) ViaNode(ipv4 string, port int) *Client {
+	c := *client
+	c.host = fmt.Sprintf(
+		"http://%s:%v",
+		ipv4,
+		port,
+	)
+	return &c
 }
 
 func (client *Client) DebugMode() {
