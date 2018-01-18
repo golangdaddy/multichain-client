@@ -2,7 +2,7 @@ package multichain
 
 func (client *Client) CreateRawExchange(txid string, vout int, asset string, quantity float64) (Response, error) {
 
-	msg := client.NodeMsg(
+	msg := client.Command(
 		"createrawexchange",
 		[]interface{}{
 			txid,
@@ -13,5 +13,5 @@ func (client *Client) CreateRawExchange(txid string, vout int, asset string, qua
 		},
 	)
 
-	return client.post(msg)
+	return client.Post(msg)
 }

@@ -22,10 +22,10 @@ func (client *Client) ListAddresses(verbose bool, addresses ...string) (Response
 		}
 	}
 
-	msg := client.NodeMsg(
+	msg := client.Command(
 		"listaddresses",
 		params,
 	)
 
-	return client.post(msg)
+	return client.Post(msg)
 }

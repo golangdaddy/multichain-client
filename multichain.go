@@ -82,7 +82,7 @@ func (client *Client) msg(params []interface{}) map[string]interface{} {
 	}
 }
 
-func (client *Client) NodeMsg(method string, params []interface{}) map[string]interface{} {
+func (client *Client) Command(method string, params []interface{}) map[string]interface{} {
 
 	msg := client.msg(params)
 	msg["method"] = fmt.Sprintf("%s", method)
@@ -94,19 +94,7 @@ func (client *Client) NodeMsg(method string, params []interface{}) map[string]in
 	return msg
 }
 
-func (client *Client) ChainMsg(method string, params []interface{}) map[string]interface{} {
-
-	msg := client.msg(params)
-	msg["method"] = fmt.Sprintf("%s %s", client.chain, method)
-
-	if client.debug {
-		fmt.Println(msg)
-	}
-
-	return msg
-}
-
-func (client *Client) post(msg interface{}) (Response, error) {
+func (client *Client) Post(msg interface{}) (Response, error) {
 
 	if client.debug {
 		fmt.Println("DEBUG MODE ON...")

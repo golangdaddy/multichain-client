@@ -2,7 +2,7 @@ package multichain
 
 func (client *Client) GetTxOut(txid string, vout int) (Response, error) {
 
-	msg := client.NodeMsg(
+	msg := client.Command(
 		"gettxout",
 		[]interface{}{
             txid,
@@ -10,5 +10,5 @@ func (client *Client) GetTxOut(txid string, vout int) (Response, error) {
         },
 	)
 
-	return client.post(msg)
+	return client.Post(msg)
 }

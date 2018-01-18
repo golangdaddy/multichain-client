@@ -37,5 +37,5 @@ func (client *Client) ListStreams(streams string, start, count int, verbose bool
 		"params": params,
 	}
 
-	return client.post(msg)
+	return client.Post(msg)
 }

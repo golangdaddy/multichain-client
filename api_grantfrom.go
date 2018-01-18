@@ -7,7 +7,7 @@ import (
 // This works like grant, but with control over the from-address used to grant the permissions. It is useful if the node has multiple addresses with administrator permissions.
 func (client *Client) GrantFrom(fromAddress string, addresses, permissions []string) (Response, error) {
 
-	msg := client.NodeMsg(
+	msg := client.Command(
         "grantfrom",
 		[]interface{}{
             fromAddress,
@@ -16,5 +16,5 @@ func (client *Client) GrantFrom(fromAddress string, addresses, permissions []str
         },
 	)
 
-	return client.post(msg)
+	return client.Post(msg)
 }

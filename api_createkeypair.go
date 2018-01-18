@@ -2,12 +2,12 @@ package multichain
 
 func (client *Client) CreateKeypair() ([]*AddressKeyPair, error) {
 
-	msg := client.NodeMsg(
+	msg := client.Command(
 		"createkeypairs",
 		[]interface{}{},
 	)
 
-	obj, err := client.post(msg)
+	obj, err := client.Post(msg)
 	if err != nil {
 		return nil, err
 	}

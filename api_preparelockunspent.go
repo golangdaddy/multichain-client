@@ -17,5 +17,5 @@ func (client *Client) PrepareLockUnspent(asset string, quantity float64, lock bo
 		},
 	}
 
-	return client.post(msg)
+	return client.Post(msg)
 }

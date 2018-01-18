@@ -4,7 +4,7 @@ import "fmt"
 
 func (client *Client) ListAddressTransactions(address string, count, skip int, verbose bool) (Response, error) {
 
-	msg := client.NodeMsg(
+	msg := client.Command(
 		"listaddresstransactions",
 		[]interface{}{
 			address,
@@ -14,5 +14,5 @@ func (client *Client) ListAddressTransactions(address string, count, skip int, v
 		},
 	)
 
-	return client.post(msg)
+	return client.Post(msg)
 }

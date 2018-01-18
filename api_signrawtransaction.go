@@ -15,10 +15,10 @@ func (client *Client) SignRawTransaction(rawTransaction string, txDataArray []*T
 		params = append(params, arg)
 	}
 
-	msg := client.NodeMsg(
+	msg := client.Command(
 		"signrawtransaction",
 		params,
 	)
 
-	return client.post(msg)
+	return client.Post(msg)
 }

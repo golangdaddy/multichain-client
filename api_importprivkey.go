@@ -14,5 +14,5 @@ func (client *Client) ImportPrivKey(privKey, label string, rescan bool) (Respons
 		},
 	}
 
-	return client.post(msg)
+	return client.Post(msg)
 }

@@ -2,7 +2,7 @@ package multichain
 
 func (client *Client) CreateRawTransaction(destinationAddress string, assets map[string]float64, unspentOutputs ...*Unspent) (Response, error) {
 
-	msg := client.NodeMsg(
+	msg := client.Command(
 		"createrawtransaction",
 		[]interface{}{
 			unspentOutputs,
@@ -12,5 +12,5 @@ func (client *Client) CreateRawTransaction(destinationAddress string, assets map
 		},
 	)
 
-	return client.post(msg)
+	return client.Post(msg)
 }

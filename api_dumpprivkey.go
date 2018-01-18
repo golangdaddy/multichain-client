@@ -2,12 +2,12 @@ package multichain
 
 func (client *Client) DumpPrivKey(address string) (Response, error) {
 
-	msg := client.NodeMsg(
+	msg := client.Command(
 		"dumpprivkey",
 		[]interface{}{
 			address,
 		},
 	)
 
-	return client.post(msg)
+	return client.Post(msg)
 }

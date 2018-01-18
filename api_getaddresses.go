@@ -2,12 +2,12 @@ package multichain
 
 func (client *Client) GetAddresses(verbose bool) (Response, error) {
 
-	msg := client.NodeMsg(
+	msg := client.Command(
 		"getaddresses",
 		[]interface{}{
 			verbose,
 		},
 	)
 
-	return client.post(msg)
+	return client.Post(msg)
 }

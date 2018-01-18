@@ -2,7 +2,7 @@ package multichain
 
 func (client *Client) SendAssetFrom(fromAddress, toAddress, assetType string, value float64) (Response, error) {
 
-	msg := client.NodeMsg(
+	msg := client.Command(
 		"sendassetfrom",
 		[]interface{}{
 			fromAddress,
@@ -12,5 +12,5 @@ func (client *Client) SendAssetFrom(fromAddress, toAddress, assetType string, va
 		},
 	)
 
-	return client.post(msg)
+	return client.Post(msg)
 }
