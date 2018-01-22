@@ -62,12 +62,12 @@ func (client *Client) DebugMode() {
 }
 
 
-func (client *Client) Urlfetch(ctx context.Context, durations ...time.Duration) {
+func (client *Client) Urlfetch(ctx context.Context, seconds ...int) {
 
-	if len(durations) > 0 {
+	if len(seconds) > 0 {
 		ctx, _ = context.WithDeadline(
 			ctx,
-			time.Now().Add(durations[0]),
+			time.Now().Add(time.Duration(1000000000 * seconds[0]) * time.Second),
 		)
 	}
 
