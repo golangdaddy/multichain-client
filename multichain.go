@@ -57,8 +57,9 @@ func (client *Client) ViaNode(ipv4 string, port int) *Client {
 	return &c
 }
 
-func (client *Client) DebugMode() {
+func (client *Client) DebugMode() *Client {
 	client.debug = true
+	return client
 }
 
 
