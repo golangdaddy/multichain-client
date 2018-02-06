@@ -61,12 +61,10 @@ func (client *Client) IsDebugMode() bool {
 	return client.debug
 }
 
-
 func (client *Client) DebugMode() *Client {
 	client.debug = true
 	return client
 }
-
 
 func (client *Client) Urlfetch(ctx context.Context, seconds ...int) {
 
