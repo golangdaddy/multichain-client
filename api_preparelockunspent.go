@@ -7,8 +7,8 @@ func (client *Client) PrepareLockUnspent(asset string, quantity float64, lock bo
 
 	msg := map[string]interface{}{
 		"jsonrpc": "1.0",
-		"id": CONST_ID,
-		"method": "preparelockunspent",
+		"id":      CONST_ID,
+		"method":  "preparelockunspent",
 		"params": []interface{}{
 			map[string]float64{
 				asset: quantity,

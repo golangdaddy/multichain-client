@@ -13,3 +13,4 @@ func (client *Client) SignMessage(addressOrPrivKey, message string) (Response, e
 
 	return client.Post(msg)
 }
+ 

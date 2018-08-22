@@ -10,7 +10,7 @@ func (client *Client) Create(typeName, name string, open bool) (Response, error)
 	msg := client.Command(
 		"create",
 		[]interface{}{
-			"type="+typeName,
+			"type="+typeName, 
 			name,
 			fmt.Sprintf("open=%v", open),
 		},

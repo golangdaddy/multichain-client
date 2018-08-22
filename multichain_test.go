@@ -23,7 +23,7 @@ func init() {
 		*port,
 		*username,
 		*password,
-	)
+	) 
 
 	fmt.Println(client.debug())
 }

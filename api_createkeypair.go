@@ -22,7 +22,7 @@ func (client *Client) CreateKeypair() ([]*AddressKeyPair, error) {
 
 		addresses[i] = &AddressKeyPair{
 			Address: result["address"].(string),
-			PubKey: result["pubkey"].(string),
+			PubKey:  result["pubkey"].(string),
 			PrivKey: result["privkey"].(string),
 		}
 

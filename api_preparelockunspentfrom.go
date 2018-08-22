@@ -18,3 +18,4 @@ func (client *Client) PrepareLockUnspentFrom(address, asset string, quantity flo
 
 	return client.Post(msg)
 }
+ 

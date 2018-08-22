@@ -17,3 +17,4 @@ func (client *Client) Grant(addresses, permissions []string) (Response, error) {
 
 	return client.Post(msg)
 }
+ 
