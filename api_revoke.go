@@ -17,4 +17,3 @@ func (client *Client) Revoke(addresses, permissions []string) (Response, error) 
 
 	return client.Post(msg)
 }
- 

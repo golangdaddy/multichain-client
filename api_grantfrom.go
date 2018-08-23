@@ -18,4 +18,3 @@ func (client *Client) GrantFrom(fromAddress string, addresses, permissions []str
 
 	return client.Post(msg)
 }
- 

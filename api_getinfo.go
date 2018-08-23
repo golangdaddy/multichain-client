@@ -9,4 +9,3 @@ func (client *Client) GetInfo() (Response, error) {
 
 	return client.Post(msg)
 }
- 

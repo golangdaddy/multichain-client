@@ -13,4 +13,3 @@ func (client *Client) SendAssetToAddress(accountAddress, assetName string, value
 
 	return client.Post(msg)
 }
- 
