@@ -14,20 +14,22 @@ To fully test this package it is neccesary to have a full hot node running at th
 
   chain := flag.String("chain", "", "is the name of the chain")
   host := flag.String("host", "localhost", "is a string for the hostname")
-  port := flag.String("port", "80", "is a string for the host port")
+  port := flag.Int("port", 80, "is a number for the host port")
   username := flag.String("username", "multichainrpc", "is a string for the username")
   password := flag.String("password", "12345678", "is a string for the password")
 
   flag.Parse()
 
   client := multichain.NewClient(
-      *chain,
-      *host,
-      *port,
+      *chain,      
       *username,
       *password,
+      *port,
+  ).ViaNode(
+      *host,
+      *port
   )
-    
+  
   obj, err := client.GetInfo()
   if err != nil {
       panic(err)
