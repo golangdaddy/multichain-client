@@ -1,14 +1,14 @@
 package multichain
 
 import (
-	"fmt"
-	"time"
-	"errors"
-	"strconv"
-	"net/http"
-	"io/ioutil"
-	"encoding/json"
 	"encoding/base64"
+	"encoding/json"
+	"errors"
+	"fmt"
+	"io/ioutil"
+	"net/http"
+	"strconv"
+	"time"
 	//
 	"golang.org/x/net/context"
 	"google.golang.org/appengine/urlfetch"
@@ -27,12 +27,12 @@ func (r Response) Result() interface{} {
 }
 
 type Client struct {
-	httpClient *http.Client
-	chain string
-	host string
-	port int
+	httpClient  *http.Client
+	chain       string
+	host        string
+	port        int
 	credentials string
-	debug bool
+	debug       bool
 }
 
 func NewClient(chain, username, password string, port int) *Client {
@@ -40,9 +40,9 @@ func NewClient(chain, username, password string, port int) *Client {
 	credentials := username + ":" + password
 
 	return &Client{
-		httpClient: &http.Client{},
-		chain: chain,
-		port: port,
+		httpClient:  &http.Client{},
+		chain:       chain,
+		port:        port,
 		credentials: base64.StdEncoding.EncodeToString([]byte(credentials)),
 	}
 }
@@ -71,7 +71,7 @@ func (client *Client) Urlfetch(ctx context.Context, seconds ...int) {
 	if len(seconds) > 0 {
 		ctx, _ = context.WithDeadline(
 			ctx,
-			time.Now().Add(time.Duration(1000000000 * seconds[0]) * time.Second),
+			time.Now().Add(time.Duration(1000000000*seconds[0])*time.Second),
 		)
 	}
 
@@ -81,8 +81,8 @@ func (client *Client) Urlfetch(ctx context.Context, seconds ...int) {
 func (client *Client) msg(params []interface{}) map[string]interface{} {
 	return map[string]interface{}{
 		"jsonrpc": "1.0",
-		"id": CONST_ID,
-		"params": params,
+		"id":      CONST_ID,
+		"params":  params,
 	}
 }
 
@@ -112,7 +112,7 @@ func (client *Client) Post(msg interface{}) (Response, error) {
 		return nil, err
 	}
 
-	request.Header.Add("Authorization", "Basic " + client.credentials)
+	request.Header.Add("Authorization", "Basic "+client.credentials)
 
 	resp, err := client.httpClient.Do(request)
 	if err != nil {
@@ -148,7 +148,7 @@ func (client *Client) Post(msg interface{}) (Response, error) {
 	}
 
 	if resp.StatusCode != 200 {
-		return nil, errors.New("INVALID RESPONSE STATUS CODE: "+strconv.Itoa(resp.StatusCode))
+		return nil, errors.New("INVALID RESPONSE STATUS CODE: " + strconv.Itoa(resp.StatusCode))
 	}
 
 	return obj, nil
