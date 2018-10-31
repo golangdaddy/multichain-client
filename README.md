@@ -4,7 +4,7 @@ This library will allow you to complete a basic set of functions with a MultiCha
 
 You should be able to issue, and send assets between addresses.
 
-If you wish to contribute to flesh out the remaining API calls, please make pull requests. My email is alex@cpu.host if you need something urgently.
+If you wish to contribute to flesh out the remaining API calls, please make pull requests. My email is alex@cpu.host or rafaelgurudesign@gmail.com if you need something urgently.
 
 I actually use a package I forked from this repo for my own http framework, so probably best to just fork this and add more API commands, which I assume most of the users have already done.
 
