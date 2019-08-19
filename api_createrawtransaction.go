@@ -1,14 +1,14 @@
 package multichain
 
-func (client *Client) CreateRawTransaction(destinationAddress string, assets map[string]float64, unspentOutputs ...*Unspent) (Response, error) {
+func (client *Client) CreateRawTransaction(inputs []*Unspent, outputs map[string]map[string]float64) (Response, error) {
 
 	msg := client.Command(
 		"createrawtransaction",
 		[]interface{}{
-			unspentOutputs,
-			map[string]interface{}{
-				destinationAddress: assets,
-			},
+			inputs,
+			outputs,
+			[]string{},
+			"lock",
 		},
 	)
 

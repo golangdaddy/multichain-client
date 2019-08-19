@@ -1,15 +1,12 @@
 package address
 
 import (
-	//    "fmt"
 	"github.com/mr-tron/base58/base58"
 )
 
 func MultiChainAddress(input []byte) (string, error) {
 
-	if !configued {
-		panic(CONST_UNCONFIGURED)
-	}
+	if !configued { panic(CONST_UNCONFIGURED) }
 
 	x := int(20 / len(address_pubkeyhash_version))
 
@@ -17,8 +14,8 @@ func MultiChainAddress(input []byte) (string, error) {
 
 	extended := []byte{}
 	for index := 0; index < len(address_pubkeyhash_version); index++ {
-		extended = append(extended, address_pubkeyhash_version[index:(index+1)]...)
-		extended = append(extended, b[(x*index):(index*x)+x]...)
+		extended = append(extended, address_pubkeyhash_version[ index : (index + 1) ]...)
+		extended = append(extended, b[ (x * index) : (index * x) + x ]...)
 	}
 
 	b = make([]byte, 4)

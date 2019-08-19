@@ -11,31 +11,14 @@ func (client *Client) ListStreams(streams string, start, count int, verbose bool
 		streams = "*"
 	}
 
-	params := []interface{}{
-		fmt.Sprintf("%s", streams),
-	}
-
-/*
-
-	params := []interface{}{
-		fmt.Sprintf("streams=%s", streams),
-	}
-
-	if start > 0 && count > 0 {
-		params = append(params, fmt.Sprintf("start=%d", start))
-		params = append(params, fmt.Sprintf("count=%d", count))
-	}
-	if verbose {
-		params = append(params, fmt.Sprintf("verbose=%v", verbose))
-	}
-*/
-
-	msg := map[string]interface{}{
-		"jsonrpc": "1.0",
-		"id": CONST_ID,
-		"method": "liststreams",
-		"params": params,
-	}
-
-	return client.Post(msg)
+	return client.Post(
+		map[string]interface{}{
+			"jsonrpc": "1.0",
+			"id": CONST_ID,
+			"method": "liststreams",
+			"params": []interface{}{
+				fmt.Sprintf("%s", streams),
+			},
+		},
+	)
 }

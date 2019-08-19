@@ -4,9 +4,7 @@ This library will allow you to complete a basic set of functions with a MultiCha
 
 You should be able to issue, and send assets between addresses.
 
-If you wish to contribute to flesh out the remaining API calls, please make pull requests. My email is alex@cpu.host or rafaelgurudesign@gmail.com if you need something urgently.
-
-I actually use a package I forked from this repo for my own http framework, so probably best to just fork this and add more API commands, which I assume most of the users have already done.
+If you wish to contribute to flesh out the remaining API calls, please make pull requests.
 
 ## Testing
 
@@ -16,22 +14,20 @@ To fully test this package it is neccesary to have a full hot node running at th
 
   chain := flag.String("chain", "", "is the name of the chain")
   host := flag.String("host", "localhost", "is a string for the hostname")
-  port := flag.Int("port", 80, "is a number for the host port")
+  port := flag.String("port", "80", "is a string for the host port")
   username := flag.String("username", "multichainrpc", "is a string for the username")
   password := flag.String("password", "12345678", "is a string for the password")
 
   flag.Parse()
 
   client := multichain.NewClient(
-      *chain,      
+      *chain,
+      *host,
+      *port,
       *username,
       *password,
-      *port,
-  ).ViaNode(
-      *host,
-      *port
   )
-  
+    
   obj, err := client.GetInfo()
   if err != nil {
       panic(err)
@@ -62,8 +58,8 @@ package main
 
 import (
     "fmt"
-    "github.com/golangdaddy/multichain-client/address"
-    "github.com/golangdaddy/multichain-client/params"
+    "gitlab.com/chainetix-groups/chains/multichain/omega/codebase/libraries/multichain/address"
+    "gitlab.com/chainetix-groups/chains/multichain/omega/codebase/libraries/multichain/params"
 )
 
 const (

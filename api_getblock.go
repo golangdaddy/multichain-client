@@ -1,11 +1,12 @@
 package multichain
 
-func (client *Client) GetBlock(heightOrHash string) (Response, error) {
+func (client *Client) GetBlock(heightOrHash interface{}, verbosity bool) (Response, error) {
 
 	msg := client.Command(
 		"getblock",
 		[]interface{}{
 			heightOrHash,
+			verbosity,
 		},
 	)
 

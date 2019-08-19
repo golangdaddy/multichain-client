@@ -6,7 +6,7 @@ import (
 
 func TestPackage(t *testing.T) {
 
-    params, err := Open("params.dat")
+    params, _, err := Open("params.dat")
     if err != nil {
         panic(err)
     }

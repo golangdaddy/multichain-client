@@ -1,25 +1,24 @@
 package address
 
 import (
-	"crypto/sha512"
 	"fmt"
 	"time"
-
 	"github.com/tyler-smith/go-bip32"
+	"crypto/sha512"
 )
 
 type KeyPair struct {
-	Type    string
-	Index   int
-	Public  string
+	Type string
+	Index int
+	Public string
+	PublicKey []byte
 	Private string
+	PrivateKey []byte
 }
 
 func KeyFromSeed(input []byte, difficulty, index int) (*bip32.Key, *bip32.Key, error) {
 
-	if !configued {
-		panic(CONST_UNCONFIGURED)
-	}
+	if !configued { panic(CONST_UNCONFIGURED) }
 
 	t := time.Now()
 
@@ -54,9 +53,7 @@ func KeyFromSeed(input []byte, difficulty, index int) (*bip32.Key, *bip32.Key, e
 
 func MultiChainWallet(seed []byte, difficulty, index int) (*KeyPair, error) {
 
-	if !configued {
-		panic(CONST_UNCONFIGURED)
-	}
+	if !configued { panic(CONST_UNCONFIGURED) }
 
 	_, key, err := KeyFromSeed(seed, difficulty, index)
 	if err != nil {
@@ -69,10 +66,12 @@ func MultiChainWallet(seed []byte, difficulty, index int) (*KeyPair, error) {
 	}
 
 	keyPair := &KeyPair{
-		Type:    "MultiChain",
-		Index:   index,
-		Public:  publicKey,
+		Type: "MultiChain",
+		Index: index,
+		Public: publicKey,
+		PublicKey: key.PublicKey().Key,
 		Private: MultiChainWIF(key.Key),
+		PrivateKey: key.Key,
 	}
 
 	return keyPair, nil

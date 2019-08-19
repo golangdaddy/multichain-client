@@ -1,6 +1,10 @@
 package multichain
 
-func (client *Client) CreateKeypair() ([]*AddressKeyPair, error) {
+import (
+	"gitlab.com/chainetix-groups/chains/multichain/omega/codebase/libraries/models/network"
+)
+
+func (client *Client) CreateKeypair() ([]*models.AddressKeyPair, error) {
 
 	msg := client.Command(
 		"createkeypairs",
@@ -14,13 +18,13 @@ func (client *Client) CreateKeypair() ([]*AddressKeyPair, error) {
 
 	array := obj["result"].([]interface{})
 
-	addresses := make([]*AddressKeyPair, len(array))
+	addresses := make([]*models.AddressKeyPair, len(array))
 
 	for i, v := range array {
 
 		result := v.(map[string]interface{})
 
-		addresses[i] = &AddressKeyPair{
+		addresses[i] = &models.AddressKeyPair{
 			Address: result["address"].(string),
 			PubKey: result["pubkey"].(string),
 			PrivKey: result["privkey"].(string),

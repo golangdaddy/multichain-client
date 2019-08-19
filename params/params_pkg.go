@@ -8,13 +8,13 @@ import (
 
 type Params map[string]string
 
-func Open(pathToFile string) (Params, error) {
+func Open(pathToFile string) (Params, []byte, error) {
 
     params := Params{}
 
     b, err := ioutil.ReadFile(pathToFile)
     if err != nil {
-        return nil, err
+        return nil, nil, err
     }
 
     blob := string(b)
@@ -40,7 +40,7 @@ func Open(pathToFile string) (Params, error) {
 
     }
 
-    return params, nil
+    return params, b, nil
 }
 
 // Params methods
