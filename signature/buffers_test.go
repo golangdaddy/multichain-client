@@ -5,7 +5,7 @@ import (
     "testing"
     "encoding/json"
     //
-    "gitlab.com/chainetix-groups/chains/multichain/omega/codebase/libraries/multichain/address"
+    "gitlab.com/golangdaddy/multichain-client/address"
 )
 
 const (

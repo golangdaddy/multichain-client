@@ -27,12 +27,12 @@ To fully test this package it is neccesary to have a full hot node running at th
       *username,
       *password,
   )
-    
+
   obj, err := client.GetInfo()
   if err != nil {
       panic(err)
   }
-  
+
   fmt.Println(obj)
 
 ```
@@ -58,8 +58,8 @@ package main
 
 import (
     "fmt"
-    "gitlab.com/chainetix-groups/chains/multichain/omega/codebase/libraries/multichain/address"
-    "gitlab.com/chainetix-groups/chains/multichain/omega/codebase/libraries/multichain/params"
+    "gitlab.com/golangdaddy/multichain-client/address"
+    "gitlab.com/golangdaddy/multichain-client/params"
 )
 
 const (
@@ -89,7 +89,7 @@ func main() {
     if err != nil {
         panic(err)
     }
-    
+
     fmt.Println(keyPair)
 }
 ```
@@ -106,6 +106,6 @@ If you have an existing private key, you can export it as WIF (Wallet Import For
 
 ```
 
-    addr, err := address.MultiChainAddress(pubKeyBytes) 
+    addr, err := address.MultiChainAddress(pubKeyBytes)
 
 ```

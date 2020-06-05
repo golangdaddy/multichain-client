@@ -10,7 +10,7 @@ import (
 	//
 	"github.com/btcsuite/btcd/btcec"
 	//
-	"gitlab.com/chainetix-groups/chains/multichain/omega/codebase/libraries/multichain/opcodes"
+	"gitlab.com/golangdaddy/multichain-client/opcodes"
 )
 
 type SigReq struct {

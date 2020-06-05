@@ -2,32 +2,28 @@ package multichain
 
 import (
 	"fmt"
-	"net/http"
 	"encoding/base64"
-	//
-	"gitlab.com/TheDarkula/jsonrouter/http"
+
+	"github.com/go-resty/resty/v2"
 )
 
 type Client struct {
-	http *httpclient.Client
+	Resty *resty.Client
+	chainName string
 	host string
 	credentials string
 	timeout []int
-	urlfetch bool
 	debug bool
 }
 
-func NewClient(httpClient *http.Client, host, username, password string, port int) *Client {
+func NewClient(chainName, host, username, password string, port int) *Client {
 
 	credentials := username + ":" + password
 
 	return &Client{
-		http: httpclient.NewClient(httpClient),
+		Resty: resty.New(),
+		chainName: chainName,
 		host: fmt.Sprintf("http://%s:%d", host, port),
 		credentials: base64.StdEncoding.EncodeToString([]byte(credentials)),
 	}
-}
-
-func (client *Client) HttpClient() *httpclient.Client {
-	return client.http
 }

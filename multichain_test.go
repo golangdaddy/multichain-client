@@ -1,7 +1,6 @@
 package multichain
 
 import (
-	"fmt"
 	"flag"
 )
 
@@ -20,10 +19,9 @@ func init() {
 	client = NewClient(
 		*chain,
 		*host,
-		*port,
 		*username,
 		*password,
+		*port,
 	)
 
-	fmt.Println(client.debug())
 }

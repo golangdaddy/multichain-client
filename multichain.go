@@ -45,15 +45,7 @@ func (client *Client) Post(msg interface{}) (Response, error) {
 	fmt.Println("POSTING: "+client.host+" "+client.credentials, msg)
 
 	obj := make(Response)
-	_, err := client.http.Post(
-		client.host,
-		msg,
-		&obj,
-		map[string]string{
-			"Authorization": "Basic " + client.credentials,
-		},
-	)
-	if err != nil {
+	if _, err := client.Resty.R().SetBody(msg).SetResult(&obj).SetAuthToken(client.credentials).Post(client.host); err != nil {
 		return nil, err
 	}
 

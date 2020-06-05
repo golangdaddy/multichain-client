@@ -1,13 +1,9 @@
 package multichain
 
-import (
-	"gitlab.com/chainetix-groups/chains/multichain/omega/codebase/libraries/models/network"
-)
-
-func (client *Client) SignRawTransaction(rawTransaction string, txDataArray []*models.TxData, privateKey string, args ...string) (Response, error) {
+func (client *Client) SignRawTransaction(rawTransaction string, txDataArray []*Unspent, privateKey string, args ...string) (Response, error) {
 
 	if txDataArray == nil {
-		txDataArray = []*models.TxData{}
+		txDataArray = []*Unspent{}
 	}
 
 	params := []interface{}{
