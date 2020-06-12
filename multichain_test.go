@@ -1,12 +1,10 @@
 package multichain
 
-import (
-	"flag"
-)
+import "flag"
 
 var client *Client
 
-func init() {
+func initFunc() {
 
 	chain := flag.String("chain", "", "is the name of the chain")
 	host := flag.String("host", "localhost", "is a string for the hostname")
