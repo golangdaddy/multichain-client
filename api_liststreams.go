@@ -1,24 +1,48 @@
 package multichain
 
 import (
-	"fmt"
+	"strings"
 )
 
-// Returns information about streams created on the blockchain. Pass a stream name, ref or creation txid in streams to retrieve information about one stream only, an array thereof for multiple streams, or * for all streams. Use count and start to retrieve part of the list only, with negative start values (like the default) indicating the most recently created streams. Extra fields are shown for streams to which this node has subscribed.
-func (client *Client) ListStreams(streams string, start, count int, verbose bool) (Response, error) {
+// Returns information about streams created on the blockchain.
+// Pass a slice of stream names, refs or creation txids to retrieve information about respective streams.
+// Extra fields are shown for streams to which this node has subscribed.
+func (client *Client) ListStreams(streams []string, verbose bool) (Response, error) {
+	return client.listStreams(strings.Join(streams, ","), verbose)
+}
 
-	if len(streams) == 0 {
-		streams = "*"
-	}
+// Returns information about all streams created on the blockchain.
+// Extra fields are shown for streams to which this node has subscribed.
+func (client *Client) ListAllStreams(verbose bool) (Response, error) {
+	return client.listStreams("*", verbose)
+}
+
+func (client *Client) listStreams(streams string, verbose bool) (Response, error) {
+
+	params := getListStreamsParams(streams, verbose)
 
 	return client.Post(
 		map[string]interface{}{
 			"jsonrpc": "1.0",
-			"id": CONST_ID,
-			"method": "liststreams",
-			"params": []interface{}{
-				fmt.Sprintf("%s", streams),
-			},
+			"id":      CONST_ID,
+			"method":  "liststreams",
+			"params":  params,
 		},
 	)
+}
+
+func getListStreamsParams(streams string, verbose bool) []interface{} {
+	if len(streams) == 0 {
+		streams = "*"
+	}
+	params := []interface{}{}
+	var streamsParam interface{}
+	if streams == "*" {
+		streamsParam = streams
+	} else {
+		streamsParam = strings.Split(streams, ",")
+	}
+	params = append(params, streamsParam)
+	params = append(params, verbose)
+	return params
 }
