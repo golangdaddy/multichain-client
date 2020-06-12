@@ -15,6 +15,11 @@ type Client struct {
 	debug bool
 }
 
+func (c *Client) String() string {
+	return fmt.Sprintf("{chainName: %s, host: %s, username: ***, password: ***, timeout: %p, debug: %t}",
+		c.chainName, c.host, c.timeout, c.debug)
+}
+
 func NewClient(chainName, host, username, password string, port int) *Client {
 	return &Client{
 		Resty: resty.New(),
