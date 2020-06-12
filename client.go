@@ -2,8 +2,6 @@ package multichain
 
 import (
 	"fmt"
-	"encoding/base64"
-
 	"github.com/go-resty/resty/v2"
 )
 
@@ -11,19 +9,23 @@ type Client struct {
 	Resty *resty.Client
 	chainName string
 	host string
-	credentials string
+	username string
+	password string
 	timeout []int
 	debug bool
 }
 
+func (c *Client) String() string {
+	return fmt.Sprintf("{chainName: %s, host: %s, username: ***, password: ***, timeout: %p, debug: %t}",
+		c.chainName, c.host, c.timeout, c.debug)
+}
+
 func NewClient(chainName, host, username, password string, port int) *Client {
-
-	credentials := username + ":" + password
-
 	return &Client{
 		Resty: resty.New(),
 		chainName: chainName,
 		host: fmt.Sprintf("http://%s:%d", host, port),
-		credentials: base64.StdEncoding.EncodeToString([]byte(credentials)),
+		username: username,
+		password: password,
 	}
 }
