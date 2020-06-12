@@ -42,10 +42,10 @@ func (client *Client) Command(method string, params []interface{}) map[string]in
 
 func (client *Client) Post(msg interface{}) (Response, error) {
 
-	fmt.Println("POSTING: "+client.host+" "+client.credentials, msg)
+	fmt.Println("POSTING: "+client.host, msg)
 
 	obj := make(Response)
-	if _, err := client.Resty.R().SetBody(msg).SetResult(&obj).SetAuthToken(client.credentials).Post(client.host); err != nil {
+	if _, err := client.Resty.R().SetBody(msg).SetResult(&obj).SetBasicAuth(client.username, client.password).Post(client.host); err != nil {
 		return nil, err
 	}
 
