@@ -53,11 +53,15 @@ func (client *Client) Subscribe(streamUid string, rescan bool, retrieveAllOffcha
 
 func appendInnerParams(indexTypes []IndexType, retrieveAllOffchain bool, params []interface{}) ([]interface{}, error) {
 	var innerParams []string
+	seen := make(map[IndexType]bool)
 	for _, indexType := range indexTypes {
 		if err := indexType.IsValid(); err != nil {
 			return nil, err
 		}
-		innerParams = append(innerParams, string(indexType))
+		if !seen[indexType] {
+			seen[indexType] = true
+			innerParams = append(innerParams, string(indexType))
+		}
 	}
 	if retrieveAllOffchain {
 		innerParams = append(innerParams, "retrieve")
