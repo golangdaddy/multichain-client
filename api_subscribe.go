@@ -29,6 +29,8 @@ func (sp IndexType) IsValid() error {
 // These are specified using a name, ref or creation/issuance txid, or for multiple items, an array thereof.
 // If rescan is true, the node will reindex all items from when the assets and/or streams were created, as well as
 // those in other subscribed entities.
+// If retrieveAllOffchain is true, all offchain items are retrieved.
+// List of IndexTypes are built for stream.
 // Returns null if successful.
 // See also the autosubscribe runtime parameter.
 func (client *Client) Subscribe(streamUid string, rescan bool, retrieveAllOffchain bool, indexTypes []IndexType) (Response, error) {
