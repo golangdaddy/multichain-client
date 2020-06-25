@@ -49,7 +49,7 @@ func (client *Client) Post(msg interface{}) (Response, error) {
 		return nil, err
 	}
 
-	if obj["error"] != nil {
+	if obj == nil || obj["error"] != nil {
 		e := obj["error"].(map[string]interface{})
 		var s string
 		m, ok := msg.(map[string]interface{})
