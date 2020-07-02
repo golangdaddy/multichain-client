@@ -12,7 +12,7 @@ import (
 // Note that, unlike other stream retrieval APIs, liststreamqueryitems cannot rely completely on prior indexing,
 // so the maxqueryscanitems runtime parameter limits how many items will be scanned after using the best index.
 // If more than this is needed, an error will be returned.
-func (client *Client) ListStreamQueryItems(stream, keys, publishers []string, verbose bool) (Response, error) {
+func (client *Client) ListStreamQueryItems(stream string, keys, publishers []string, verbose bool) (Response, error) {
 
 	q, err := getQuery(keys, publishers)
 	if err != nil {
