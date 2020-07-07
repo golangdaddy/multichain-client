@@ -3,7 +3,7 @@ package multichain
 func (client *Client) GetTxOut(txid string, vout int) (Response, error) {
 
 	msg := client.Command(
-		"gettxout",
+		"gettxoutdata",
 		[]interface{}{
             txid,
             vout,
