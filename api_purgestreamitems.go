@@ -85,9 +85,13 @@ func (client *Client) PurgeStreamItemsByBlockset(stream string, blockSet string)
 // HINT: Available in MultiChain Enterprise only.
 //
 func (client *Client) PurgeStreamItemsByQuery(stream string, keys, publishers []string) (Response, error) {
+	q, err := getQuery(keys, publishers)
+	if err != nil {
+		return nil, err
+	}
 	return client.purgePublishedItems([]interface{}{
 		stream,
-		getQuery(keys, publishers),
+		q,
 	})
 }
 
