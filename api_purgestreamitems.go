@@ -11,7 +11,7 @@ package multichain
 // HINT: Available in MultiChain Enterprise only.
 //
 func (client *Client) PurgeAllStreamItems(stream string) (Response, error) {
-	return client.purgePublishedItems([]interface{}{
+	return client.purgeStreamItems([]interface{}{
 		stream,
 		"all",
 	})
@@ -29,7 +29,7 @@ func (client *Client) PurgeAllStreamItems(stream string) (Response, error) {
 // HINT: Available in MultiChain Enterprise only.
 //
 func (client *Client) PurgeStreamItemsByTxids(stream string, txids []string) (Response, error) {
-	return client.purgePublishedItems([]interface{}{
+	return client.purgeStreamItems([]interface{}{
 		stream,
 		txids,
 	})
@@ -47,7 +47,7 @@ func (client *Client) PurgeStreamItemsByTxids(stream string, txids []string) (Re
 // HINT: Available in MultiChain Enterprise only.
 //
 func (client *Client) PurgeStreamItemsByTxOutputs(stream string, txOuts []TransactionOutput) (Response, error) {
-	return client.purgePublishedItems([]interface{}{
+	return client.purgeStreamItems([]interface{}{
 		stream,
 		txOuts,
 	})
@@ -66,7 +66,7 @@ func (client *Client) PurgeStreamItemsByTxOutputs(stream string, txOuts []Transa
 // HINT: Available in MultiChain Enterprise only.
 //
 func (client *Client) PurgeStreamItemsByBlockset(stream string, blockSet string) (Response, error) {
-	return client.purgePublishedItems([]interface{}{
+	return client.purgeStreamItems([]interface{}{
 		stream,
 		blocks{Blocks: blockSet},
 	})
@@ -89,7 +89,7 @@ func (client *Client) PurgeStreamItemsByQuery(stream string, keys, publishers []
 	if err != nil {
 		return nil, err
 	}
-	return client.purgePublishedItems([]interface{}{
+	return client.purgeStreamItems([]interface{}{
 		stream,
 		q,
 	})
